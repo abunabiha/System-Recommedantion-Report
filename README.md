@@ -313,6 +313,18 @@ Berdasarkan hasil evaluasi, dapat disimpulkan bahwa:
    - Fine-t uning Parameter: Melakukan tuning parameter pada model untuk meningkatkan akurasi rekomendasi.
    - Analisis Lebih Dalam: Melakukan analisis lebih dalam terhadap data untuk memahami pola pembelian pelanggan dan produk yang lebih baik.
 
+# Dampak Model terhadap Business Understanding
+1. Menjawab Problem Statement
+   Model rekomendasi yang dikembangkan berhasil menjawab problem statement yang diajukan, yaitu meningkatkan pengalaman pelanggan dengan memberikan rekomendasi produk yang relevan. Dengan menggunakan pendekatan Content-Based Filtering dan Collaborative Filtering, sistem mampu memberikan rekomendasi yang sesuai dengan preferensi dan perilaku pembelian pengguna.
+2. Mencapai Goals yang Diharapkan
+   Model ini berhasil mencapai tujuan yang diharapkan, yaitu meningkatkan tingkat konversi penjualan dan kepuasan pelanggan. Hasil evaluasi menunjukkan nilai precision dan recall yang baik, yang menunjukkan bahwa rekomendasi yang diberikan relevan dan efektif. Dengan demikian, pelanggan lebih cenderung untuk membeli produk yang direkomendasikan, yang pada gilirannya dapat meningkatkan pendapatan perusahaan.
+3. Dampak Solusi yang Direncanakan
+   Solusi yang direncanakan memberikan dampak positif terhadap bisnis. Dengan sistem rekomendasi yang efektif, perusahaan dapat meningkatkan loyalitas pelanggan dan mendorong pembelian berulang. Selain itu, analisis data yang lebih mendalam memungkinkan perusahaan untuk memahami preferensi pelanggan dengan lebih baik, sehingga dapat menyesuaikan strategi pemasaran dan penawaran produk.
+4. Peningkatan Pengalaman Pelanggan:
+   Dengan memberikan rekomendasi yang relevan, pelanggan merasa lebih diperhatikan dan mendapatkan nilai lebih dari pengalaman berbelanja mereka. Hal ini dapat meningkatkan kepuasan pelanggan dan menciptakan hubungan jangka panjang antara pelanggan dan perusahaan.
+5. Pengambilan Keputusan yang Lebih Baik
+   Data yang dihasilkan dari model rekomendasi dapat digunakan untuk pengambilan keputusan yang lebih baik dalam hal pengelolaan inventaris, pemasaran, dan pengembangan produk. Dengan memahami produk mana yang paling diminati, perusahaan dapat mengoptimalkan stok dan merencanakan kampanye pemasaran yang lebih efektif.
+
 ## Referensi
 - Ball, A., Coelho, P., & Vilares, M. (2006). Service personalization and loyalty. Journal of Services Marketing, 20(5), 391–403. https://doi.org/10.1108/08876040610691284
 - Jiang, Y., Shang, J., & Liu, Y. (2010). Maximizing customer satisfaction through an online recommendation system: A novel associative classification model. Decision Support Systems, 48(4), 470–479. https://doi.org/10.1016/j.dss.2009.06.006
