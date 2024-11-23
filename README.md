@@ -83,7 +83,7 @@ Grafik total pembelian per bulan memberikan wawasan berharga tentang perilaku pe
 
 2. Informasi 10 Produk Terlaris
 
-![alt text](sepuluhProdukTerlaris.png)
+![](sepuluhPrldukTerlir.png)
 
 Berdasarkan grafik yang menunjukkan 10 produk terlaris, berikut adalah beberapa analisis yang dapat dilakukan:
 1. Produk Paling Laris:
