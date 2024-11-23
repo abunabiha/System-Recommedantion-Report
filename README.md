@@ -82,6 +82,7 @@ Berdasarkan grafik yang menunjukkan total pembelian per bulan, berikut adalah be
 Grafik total pembelian per bulan memberikan wawasan berharga tentang perilaku pelanggan dan pola pembelian. Dengan analisis ini, perusahaan dapat merumuskan strategi pemasaran dan pengelolaan inventaris yang lebih efektif untuk meningkatkan penjualan dan kepuasan pelanggan.
 
 2. Informasi 10 Produk Terlaris
+   
 ![sepuluhPrldukTerlair](https://github.com/user-attachments/assets/b950ed0c-e47f-42d1-91da-db6abe9d45f5)
 
 
@@ -277,7 +278,7 @@ Pada bagian ini, kami menggunakan metrik evaluasi untuk menilai kinerja model re
 1. Precision:
    Precision mengukur proporsi rekomendasi yang relevan dari total rekomendasi yang diberikan. Formula untuk precision adalah:
    
-        <img width="301" alt="Precision" src="https://github.com/user-attachments/assets/f8720c8f-6079-4ef9-b56e-804aafbdca94">
+   <img width="301" alt="Precision" src="https://github.com/user-attachments/assets/f8720c8f-6079-4ef9-b56e-804aafbdca94">
 
 
    Precision memberikan gambaran tentang seberapa akurat rekomendasi yang diberikan oleh sistem.
