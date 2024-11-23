@@ -123,8 +123,10 @@ Berdasarkan histogram yang menunjukkan distribusi harga produk, berikut adalah b
 Histogram distribusi harga produk memberikan wawasan berharga tentang preferensi harga pelanggan. Dengan analisis ini, perusahaan dapat merumuskan strategi pemasaran dan pengelolaan inventaris yang lebih baik untuk meningkatkan penjualan dan kepuasan pelanggan.
 
 4. Informasi Pola Pembelian Harian
+   
+![TotaPembelianHarian](https://github.com/user-attachments/assets/f7e26c62-af5f-44da-a821-f3dc6574ed81)
 
-![alt text](TotalPembelianPerHari.png)
+
 
 Berdasarkan grafik yang menunjukkan pola pembelian harian, berikut adalah beberapa analisis yang dapat dilakukan:
 1. Hari dengan Pembelian Tertinggi:
@@ -145,7 +147,8 @@ Grafik pola pembelian harian memberikan wawasan berharga tentang perilaku pelang
 
 5. Informasi Top 10 Negara dengan Total Pembelian
 
-![alt text](Top10Negara.png)
+![top10negara](https://github.com/user-attachments/assets/78b2692a-730d-4932-92c7-f4f423eb4fc2)
+
 
 Berdasarkan grafik yang menunjukkan total pembelian dari 10 negara teratas, berikut adalah analisis yang dapat dilakukan:
 1. Dominasi United Kingdom:
@@ -166,8 +169,9 @@ Grafik ini memberikan wawasan berharga tentang distribusi pembelian berdasarkan 
 
 
 6. Informasi Hubungan Quantity dan Total Amount
+   
+![Hubunganquantitiydanamount](https://github.com/user-attachments/assets/47dda0a5-5923-49aa-b0ac-adb71333f21a)
 
-![alt text](HubunganQuantitydanAmount.png)
 
 Berdasarkan grafik yang menunjukkan hubungan antara Quantity dan Total Amount, berikut adalah analisis yang dapat dilakukan:
 1. Pola Umum:
@@ -272,13 +276,18 @@ Pada tahapan ini, kami membahas model sistem rekomendasi yang dikembangkan untuk
 Pada bagian ini, kami menggunakan metrik evaluasi untuk menilai kinerja model rekomendasi yang dikembangkan. Metrik yang digunakan adalah:
 1. Precision:
    Precision mengukur proporsi rekomendasi yang relevan dari total rekomendasi yang diberikan. Formula untuk precision adalah:
-         ![alt text](Precision.png)
-  
+   
+        <img width="301" alt="Precision" src="https://github.com/user-attachments/assets/f8720c8f-6079-4ef9-b56e-804aafbdca94">
+
+
    Precision memberikan gambaran tentang seberapa akurat rekomendasi yang diberikan oleh sistem.
 
-2. Recall:
+3. Recall:
    Recall mengukur proporsi rekomendasi yang relevan dari total item yang relevan. Formula untuk recall adalah:
-         ![alt text](Recall.png)
+   
+    <img width="333" alt="Recall" src="https://github.com/user-attachments/assets/8e05f403-e25d-4b8f-9fe8-dfcb0d3bdfb1">
+
+        
 
    Recall memberikan gambaran tentang seberapa baik sistem dalam menemukan item relevan.
 
