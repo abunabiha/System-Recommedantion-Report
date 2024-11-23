@@ -82,8 +82,8 @@ Berdasarkan grafik yang menunjukkan total pembelian per bulan, berikut adalah be
 Grafik total pembelian per bulan memberikan wawasan berharga tentang perilaku pelanggan dan pola pembelian. Dengan analisis ini, perusahaan dapat merumuskan strategi pemasaran dan pengelolaan inventaris yang lebih efektif untuk meningkatkan penjualan dan kepuasan pelanggan.
 
 2. Informasi 10 Produk Terlaris
+![sepuluhPrldukTerlair](https://github.com/user-attachments/assets/b950ed0c-e47f-42d1-91da-db6abe9d45f5)
 
-![](sepuluhPrldukTerlir.png)
 
 Berdasarkan grafik yang menunjukkan 10 produk terlaris, berikut adalah beberapa analisis yang dapat dilakukan:
 1. Produk Paling Laris:
