@@ -276,6 +276,9 @@ Pada tahapan ini, kami membahas model sistem rekomendasi yang dikembangkan untuk
    Kekurangan:
    - Memerlukan pemahaman yang baik tentang fitur produk.
    - Mungkin tidak dapat menangkap preferensi pengguna yang lebih kompleks.
+- Berikut adalah 5 Rekomendasi yang dihasilkan menggunakan Content-Base Filtering 
+<img width="533" alt="Screenshot 2024-11-24 at 13 35 58" src="https://github.com/user-attachments/assets/d8632c88-7987-4cfa-9b53-0d1cad60fefc">
+
 
 2. Collaborative Filtering:
    Pendekatan ini menggunakan data interaksi pengguna dengan produk untuk memberikan rekomendasi. Dalam hal ini, kami menggunakan cosine similarity untuk mengukur kesamaan antara produk berdasarkan pembelian yang dilakukan oleh pelanggan.
