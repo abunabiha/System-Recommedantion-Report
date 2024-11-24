@@ -463,8 +463,8 @@ Berdasarkan pada penggunaan metrik evaluasi Precission dan Recall dapat ambil se
 
 ![56e203a3-8121-4ba0-a1fa-30899c14aa11](https://github.com/user-attachments/assets/ba07df23-f8b0-42cd-84c5-a81f1c4cc815)
 
-3. Collaborative Filtering 
-   Collaborative Filtering merekomendasikan item berdasarkan interaksi pengguna lain dengan  item tersebut, baik melalui pendekatan user-based maupun item-based. Hasil evaluasi untuk model ini menunjukkan precision sebesar 0.70, recall 0.60, dan F1 score 0.65. Kelebihan dari Collaborative Filtering adalah kemampuannya untuk menangkap preferensi pengguna yang lebih kompleks dengan mempertimbangkan interaksi pengguna lain, sehingga dapat memberikan rekomendasi yang lebih beragam. Namun, model ini juga memiliki kekurangan, seperti precision yang lebih rendah dibandingkan dengan Content-Based Filtering, yang menunjukkan bahwa beberapa rekomendasi mungkin tidak relevan, serta masalah cold start yang dihadapi ketika memberikan rekomendasi untuk pengguna baru atau item baru yang belum memiliki interaksi. Berikut hasil evaluasi dalam bentuk grafiknya. 
+2. Collaborative Filtering 
+   Collaborative Filtering merekomendasikan item berdasarkan interaksi pengguna lain dengan  item tersebut, baik melalui pendekatan user-based maupun item-based. Hasil evaluasi untuk model ini yang ditunjukkan oleh grafik distribusi bahwa nilai precision, terlihat bahwa sebagian besar nilai hingga 0.2, dengan frekuensi tertinggi pada nilai yang lebih rendah. Ini menunjukkan bahwa banyak rekomendasi yang dihasilkan memiliki precision yang rendah, artinya hanya sedikit dari rekomendasi tersebut yang relevan.Sementara itu, grafik recall menunjukkan pola yang serupa, di mana sebagian besar nilai recall juga berada di kisaran 0.0 hingga 0.1. Hal ini mengindikasikan bahwa model tidak berhasil merekomendasikan banyak item relevan dari total item yang seharusnya direkomendasikan. 
    
 ![d195144e-d2d4-4ed3-b495-c54d15d85b84](https://github.com/user-attachments/assets/d0f596d6-f5ab-4bfb-a5bf-a3b4f08e5878)
 
@@ -473,22 +473,26 @@ Berdasarkan pada penggunaan metrik evaluasi Precission dan Recall dapat ambil se
 
 Berdasarkan pada penggunaan metrik evaluasi Precission dan Recall dapat ambil sebuah hasil : 
 1. Content-Based Filtering
-   Content-Based Filtering merekomendasikan item kepada pengguna berdasarkan kesamaan fitur dari item yang telah mereka sukai atau beli sebelumnya, menggunakan fitur seperti Description, UnitPrice, dan fitur tambahan yang dihasilkan dari proses feature engineering. Hasil evaluasi pada grafik menunjukkan bahwa model ini memiliki nilai precision berada nilai di sekitar 0.1, Sementara itu, nilai recall tampaknya sedikit lebih tinggi, mungkin sekitar 0.2 atau lebih rendah, tetapi tetap dalam kisaran yang rendah.
+
+    Content-Based Filtering merekomendasikan item kepada pengguna berdasarkan kesamaan fitur dari item yang telah mereka sukai atau beli sebelumnya, menggunakan fitur seperti Description, UnitPrice, dan fitur tambahan yang dihasilkan dari proses feature engineering. Hasil evaluasi pada grafik menunjukkan bahwa model ini memiliki nilai precision berada nilai di sekitar 0.1, Sementara itu, nilai recall tampaknya sedikit lebih tinggi, mungkin sekitar 0.2 atau lebih rendah, tetapi tetap dalam kisaran yang rendah.
 
 2. Collaborative Filtering 
-   Collaborative Filtering merekomendasikan item berdasarkan interaksi pengguna lain dengan  item tersebut, baik melalui pendekatan user-based maupun item-based. Hasil evaluasi untuk model ini yang ditunjukkan oleh grafik distribusi bahwa nilai precision, terlihat bahwa sebagian besar nilai hingga 0.2, dengan frekuensi tertinggi pada nilai yang lebih rendah. Ini menunjukkan bahwa banyak rekomendasi yang dihasilkan memiliki precision yang rendah, artinya hanya sedikit dari rekomendasi tersebut yang relevan.Sementara itu, grafik recall menunjukkan pola yang serupa, di mana sebagian besar nilai recall juga berada di kisaran 0.0 hingga 0.1. Hal ini mengindikasikan bahwa model tidak berhasil merekomendasikan banyak item relevan dari total item yang seharusnya direkomendasikan.
 
+    Collaborative Filtering merekomendasikan item berdasarkan interaksi pengguna lain dengan  item tersebut, baik melalui pendekatan user-based maupun item-based. Hasil evaluasi untuk model ini yang ditunjukkan oleh grafik distribusi bahwa nilai precision, terlihat bahwa sebagian besar nilai hingga 0.2, dengan frekuensi tertinggi pada nilai yang lebih rendah. Ini menunjukkan bahwa banyak rekomendasi yang dihasilkan memiliki precision yang rendah, artinya hanya sedikit dari rekomendasi tersebut yang relevan.Sementara itu, grafik recall menunjukkan pola yang serupa, di mana sebagian besar nilai recall juga berada di kisaran 0.0 hingga 0.1. Hal ini mengindikasikan bahwa model tidak berhasil merekomendasikan banyak item relevan dari total item yang seharusnya direkomendasikan.
+
+Kesimpulan 
 
 Meskipun hasil evaluasi menunjukkan nilai precision dan recall yang rendah untuk kedua model, ada beberapa aspek yang dapat dicatat. Pertama, Content-Based Filtering menunjukkan potensi dalam memberikan rekomendasi yang relevan berdasarkan fitur item, yang dapat ditingkatkan dengan penambahan fitur yang lebih beragam dan relevan. Ini memberikan dasar yang kuat untuk pengembangan lebih lanjut, di mana model dapat disempurnakan untuk meningkatkan akurasi rekomendasi.
 Kedua, Collaborative Filtering memiliki keunggulan dalam menangkap preferensi pengguna yang lebih kompleks dengan mempertimbangkan interaksi pengguna lain. Meskipun saat ini hasilnya belum optimal, pendekatan ini membuka peluang untuk eksplorasi lebih lanjut dalam memahami pola perilaku pengguna dan meningkatkan relevansi rekomendasi.
 Dengan melakukan analisis lebih mendalam dan menerapkan teknik yang lebih canggih, seperti hybrid recommendation systems, ada potensi besar untuk meningkatkan performa model. Upaya ini tidak hanya akan meningkatkan kepuasan pengguna, tetapi juga dapat berkontribusi pada peningkatan penjualan dan loyalitas pelanggan.
 Secara keseluruhan, meskipun ada tantangan yang harus dihadapi, fondasi yang ada memberikan peluang untuk pengembangan yang lebih baik di masa depan.
 
-Sebagai pertimbangan rekomendasi untuk peningkatan perbaikan model maka diberikan saran : 
+Sebagain pertimbangan rekomendasi untuk peningkatan perbaikan model maka diberikan saran : 
    - Pengumpulan Data Lebih Banyak yakni dengan mengumpulkan lebih banyak data interaksi untuk meningkatkan kualitas rekomendasi.
    - Penggunaan Model Hybrid yakni dengan mencoba pendekatan hybrid yang menggabungkan collaborative filtering dan content-based filtering untuk meningkatkan akurasi rekomendasi.
    - Fine-t uning Parameter yakni dengan melakukan tuning parameter pada model untuk meningkatkan akurasi rekomendasi.
    - Analisis Lebih Dalam yakni dengan melakukan analisis lebih dalam terhadap data untuk memahami pola pembelian pelanggan dan produk yang lebih baik.
+
    
 # Dampak Model terhadap Business Understanding
 Berdasarkan pada penggunaan metrik evaluasi Precission dan Recall dapat ambil sebuah hasil : 
