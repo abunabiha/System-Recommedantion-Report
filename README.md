@@ -276,7 +276,7 @@ Pada tahapan ini, kami membahas model sistem rekomendasi yang dikembangkan untuk
    Kekurangan:
    - Memerlukan pemahaman yang baik tentang fitur produk.
    - Mungkin tidak dapat menangkap preferensi pengguna yang lebih kompleks.
-- Berikut adalah hasil  dari penerapan Content-Base Filtering
+Berikut adalah hasil  dari penerapan Content-Base Filtering
   
 <img width="533" alt="Screenshot 2024-11-24 at 13 35 58" src="https://github.com/user-attachments/assets/d8632c88-7987-4cfa-9b53-0d1cad60fefc">
 
@@ -284,7 +284,6 @@ Pada tahapan ini, kami membahas model sistem rekomendasi yang dikembangkan untuk
 
 ![56e203a3-8121-4ba0-a1fa-30899c14aa11](https://github.com/user-attachments/assets/ba07df23-f8b0-42cd-84c5-a81f1c4cc815)
 
-Keterangan :
 Keterangan :
 - Top-5 rekomendasi menunjukkan bahwa model dapat memberikan rekomendasi yang relevan dan bermanfaat untuk pelanggan tertentu. Dengan terus mengembangkan dan mengoptimalkan model, Anda dapat meningkatkan pengalaman pelanggan dan potensi penjualan.
 - Semua rekomendasi ditujukan untuk pelanggan dengan CustomerID 14096. Ini menunjukkan bahwa model berhasil memberikan rekomendasi yang relevan untuk pelanggan tertentu berdasarkan riway
@@ -303,6 +302,21 @@ Keterangan :
    - Memerlukan data yang cukup banyak untuk menghasilkan rekomendasi yang akurat.
    - Rentan terhadap cold start problem, di mana produk baru atau pengguna baru tidak memiliki cukup data untuk memberikan rekomendasi yang baik.
 
+Berikut adalah hasil  dari penerapan Content-Base Filtering
+
+<img width="539" alt="Screenshot 2024-11-24 at 13 40 51" src="https://github.com/user-attachments/assets/11af7475-4011-4f18-8aff-2e82e2a34f82">
+
+![d195144e-d2d4-4ed3-b495-c54d15d85b84](https://github.com/user-attachments/assets/d0f596d6-f5ab-4bfb-a5bf-a3b4f08e5878)
+
+![ded2d8f5-a7ae-4014-beee-40bdf57271d3](https://github.com/user-attachments/assets/6d1abf65-9bc8-496e-bb10-83cabe7134b8)
+
+Keterangan :
+- Top-5 rekomendasi menunjukkan bahwa model dapat memberikan rekomendasi yang relevan dan bermanfaat untuk pelanggan tertentu. Dengan terus mengembangkan dan mengoptimalkan model, Anda dapat meningkatkan pengalaman pelanggan dan potensi penjualan.
+- Semua rekomendasi ditujukan untuk pelanggan dengan CustomerID 14096. Ini menunjukkan bahwa model berhasil memberikan rekomendasi yang relevan berdasarkan riwayat pembelian pelanggan tersebut.
+- Rekomendasi mencakup berbagai jenis produk, mulai dari aksesori fashion (BLUE DISCO HANDBAG) hingga peralatan rumah tangga (TWO DOOR CURIO CABINET). Ini menunjukkan bahwa model dapat merekomendasikan produk dari berbagai kategori, yang dapat menarik minat pelanggan.
+- Deskripsi produk memberikan konteks yang jelas tentang apa yang direkomendasikan. Misalnya, "BLUE DISCO HANDBAG" adalah produk yang menarik perhatian, sementara "HARDMAN MUG 3 ASSORTED" menunjukkan variasi dalam pilihan mug.
+- Nilai similarity berkisar antara 0.345528 hingga 0.467172. Nilai ini menunjukkan tingkat kemiripan produk dengan produk yang sebelumnya dibeli oleh pelanggan.
+- Nilai similarity yang lebih tinggi (seperti 0.467172 untuk tas) menunjukkan bahwa produk tersebut lebih relevan dengan preferensi pelanggan, yang dapat meningkatkan kemungkinan pembelian.
 
 ## Evaluation
 Pada bagian ini, kami menggunakan metrik evaluasi untuk menilai kinerja model rekomendasi yang dikembangkan. Metrik yang digunakan adalah:
