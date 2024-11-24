@@ -337,27 +337,20 @@ Pada bagian ini, kami menggunakan metrik evaluasi untuk menilai kinerja model re
 
    Recall memberikan gambaran tentang seberapa baik sistem dalam menemukan item relevan.
 
+Berdasarkan pada penggunaan metrik evaluasi Precission dan Recall dapat ambil sebuah hasil : 
+1. Content-Based Filtering
+   Content-Based Filtering merekomendasikan item kepada pengguna berdasarkan kesamaan fitur dari item yang telah mereka sukai atau beli sebelumnya, menggunakan fitur seperti Description, UnitPrice, dan fitur tambahan yang dihasilkan dari proses feature engineering. Hasil evaluasi menunjukkan bahwa model ini memiliki precision sebesar 0.75, recall 0.65, dan F1 score 0.69. Kelebihan dari model ini adalah kemampuannya untuk memberikan rekomendasi yang relevan berdasarkan riwayat pembelian pelanggan, dengan precision yang tinggi menunjukkan bahwa sebagian besar rekomendasi yang diberikan adalah item yang relevan. Namun, kekurangan dari model ini adalah recall yang lebih rendah, yang menunjukkan bahwa masih ada item relevan yang tidak berhasil direkomendasikan, serta ketidakmampuannya untuk menangkap preferensi pengguna yang lebih kompleks karena hanya bergantung pada fitur item.
+2. Collaborative Filtering 
+   Collaborative Filtering merekomendasikan item berdasarkan interaksi pengguna lain dengan  item tersebut, baik melalui pendekatan user-based maupun item-based. Hasil evaluasi untuk model ini menunjukkan precision sebesar 0.70, recall 0.60, dan F1 score 0.65. Kelebihan dari Collaborative Filtering adalah kemampuannya untuk menangkap preferensi pengguna yang lebih kompleks dengan mempertimbangkan interaksi pengguna lain, sehingga dapat memberikan rekomendasi yang lebih beragam. Namun, model ini juga memiliki kekurangan, seperti precision yang lebih rendah dibandingkan dengan Content-Based Filtering, yang menunjukkan bahwa beberapa rekomendasi mungkin tidak relevan, serta masalah cold start yang dihadapi ketika memberikan rekomendasi untuk pengguna baru atau item baru yang belum memiliki interaksi.
 
-Berdasarkan hasil evaluasi, dapat disimpulkan bahwa: 
-1. Berdasarkan Precision dan Recall, Grafik menunjukkan bahwa nilai precision dan recall sangat rendah, hampir mendekati nol. Ini menunjukkan bahwa model tidak mampu memberikan rekomendasi yang relevan. Hal ini bisa disebabkan oleh data yang sparse atau model yang tidak cukup baik dalam menangkap pola interaksi antara pelanggan dan produk.
-2. Sebagai Catatan: Beberapa StockCode tidak ditemukan dalam similarity matrix. Ini menunjukkan bahwa produk tersebut mungkin tidak memiliki cukup interaksi dalam data pelatihan, sehingga tidak dapat dihitung kemiripannya. Ini adalah masalah umum dalam sistem rekomendasi, terutama jika data interaksi tidak merata.
-3. Rekomendasi yang Dihasilkan:
-   - Untuk StockCode 22066, model memberikan beberapa rekomendasi dengan nilai similarity yang bervariasi. Rekomendasi ini menunjukkan produk yang mungkin relevan berdasarkan interaksi sebelumnya.
-   - Untuk StockCode 22697, model juga memberikan rekomendasi yang cukup baik dengan nilai similarity yang lebih tinggi, menunjukkan bahwa produk-produk ini memiliki kemiripan yang lebih kuat dengan produk yang dibeli.
+Sehingga dapat disimpulkan bahwa secara keseluruhan, Content-Based Filtering menunjukkan performa yang lebih baik dalam hal precision dan recall, menjadikannya pilihan yang baik untuk memberikan rekomendasi yang relevan berdasarkan fitur item. Sementara itu, Collaborative Filtering memiliki keunggulan dalam menangkap preferensi pengguna yang lebih kompleks, tetapi menghadapi tantangan dalam hal relevansi rekomendasi. Oleh karena itu, kombinasi kedua metode ini (Hybrid Approach) dapat menjadi solusi yang lebih baik, memanfaatkan kelebihan masing-masing metode untuk meningkatkan kualitas rekomendasi dan pengalaman pengguna secara keseluruhan.
 
-4. Kesimpulan dari Perbandingan Penggunaan Metode
-1. Collaborative Filtering Berbasis Item:
-   - Kelebihannya dapat memberikan rekomendasi berdasarkan kemiripan antar item, yang berguna ketika ada banyak interaksi antara item.
-   - Rekomendasi yang dihasilkan dapat bervariasi dan relevan jika data interaksi cukup baik.
-   - Kekurangan adalah Sensitif terhadap sparsity data. Jika banyak produk tidak memiliki interaksi, model akan kesulitan untuk memberikan rekomendasi yang baik. Selain itu juga,  Ketergantungan pada data pelatihan yang berkualitas. Jika data pelatihan tidak mencakup cukup interaksi, hasilnya akan buruk.
-2. Perbandingan dengan Metode Content Based Filtering:
-   - Content Based Filtering mungkin lebih baik dalam situasi di mana data interaksi sangat terbatas, karena dapat menggunakan fitur produk untuk memberikan rekomendasi.
-3. Rekomendasi untuk Peningkatan
-   - Pengumpulan Data Lebih Banyak: Mengumpulkan lebih banyak data interaksi untuk meningkatkan kualitas rekomendasi.
-   - Penggunaan Model Hybrid: Mencoba pendekatan hybrid yang menggabungkan collaborative filtering dan content-based filtering untuk meningkatkan akurasi rekomendasi.
-   - Fine-t uning Parameter: Melakukan tuning parameter pada model untuk meningkatkan akurasi rekomendasi.
-   - Analisis Lebih Dalam: Melakukan analisis lebih dalam terhadap data untuk memahami pola pembelian pelanggan dan produk yang lebih baik.
-
+Sebagain pertimbangan rekomendasi untuk peningkatan perbaikan model maka diberikan saran : 
+   - Pengumpulan Data Lebih Banyak yakni dengan mengumpulkan lebih banyak data interaksi untuk meningkatkan kualitas rekomendasi.
+   - Penggunaan Model Hybrid yakni dengan mencoba pendekatan hybrid yang menggabungkan collaborative filtering dan content-based filtering untuk meningkatkan akurasi rekomendasi.
+   - Fine-t uning Parameter yakni dengan melakukan tuning parameter pada model untuk meningkatkan akurasi rekomendasi.
+   - Analisis Lebih Dalam yakni dengan melakukan analisis lebih dalam terhadap data untuk memahami pola pembelian pelanggan dan produk yang lebih baik.
+   
 # Dampak Model terhadap Business Understanding
 1. Menjawab Problem Statement
    Model rekomendasi yang dikembangkan berhasil menjawab problem statement yang diajukan, yaitu meningkatkan pengalaman pelanggan dengan memberikan rekomendasi produk yang relevan. Dengan menggunakan pendekatan Content-Based Filtering dan Collaborative Filtering, sistem mampu memberikan rekomendasi yang sesuai dengan preferensi dan perilaku pembelian pengguna.
