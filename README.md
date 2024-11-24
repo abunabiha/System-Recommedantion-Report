@@ -229,18 +229,33 @@ Berdasarkan ringkasa diatas dapat disimpulkan bahwa:
 
 ## Data Preparation
 Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting untuk memastikan bahwa data siap digunakan dalam analisis dan model rekomendasi. Proses yang dilakukan adalah sebagai berikut:
-1. Loading Data:
-   Data diload dari file CSV menggunakan berbagai encoding (latin-1, iso-8859-1, cp1252) untuk memastikan bahwa data dapat dibaca dengan benar. Ini penting karena kesalahan dalam encoding dapat menyebabkan data tidak terbaca atau hilang.
-2. Dataset Information:
-   Setelah data diload, informasi dasar tentang dataset ditampilkan, termasuk jumlah total entri, kolom yang ada, dan tipe data masing-masing kolom. Ini membantu dalam memahami struktur data dan mengidentifikasi potensi masalah, seperti missing values.
-3. Handling Missing Values:
-   Ditemukan bahwa kolom Description dan CustomerID memiliki missing values. Mengidentifikasi dan menangani missing values sangat penting untuk mencegah bias dalam analisis dan memastikan akurasi model.
-4. Cleaning Data:
-   Data dibersihkan dengan menghapus entri yang tidak relevan atau duplikat. Proses ini penting untuk meningkatkan kualitas data dan mengurangi noise yang dapat mempengaruhi hasil analisis.
-5. Transformasi Data:
-   Data yang diperlukan untuk analisis lebih lanjut, seperti normalisasi atau pengkodean, dapat diterapkan. Ini membantu dalam mempersiapkan data untuk algoritma machine learning yang mungkin memerlukan data dalam format tertentu.
-6. Sampling Data:
-   Mengambil sampel data untuk analisis awal dan pengujian model. Ini memungkinkan pengujian yang lebih cepat dan efisien sebelum menerapkan model pada seluruh dataset.
+1. Load Data
+   - Data dimuat dari file CSV dengan mencoba beberapa encoding (latin-1, iso-8859-1, cp1252). Ini penting karena file CSV dapat disimpan dengan berbagai encoding, dan memilih yang tepat memastikan data dibaca dengan benar.
+   - Jika data berhasil dimuat, pesan konfirmasi ditampilkan, dan DataFrame (df) dikembalikan. Jika semua encoding gagal, sebuah exception dilempar untuk memberi tahu pengguna bahwa file tidak dapat dibaca.
+   - Informasi Dataset: Setelah data dimuat, informasi dasar tentang dataset ditampilkan menggunakan df.info(), yang mencakup jumlah entri, jumlah kolom, dan tipe data dari setiap kolom. Ini memberikan gambaran awal tentang struktur data.
+2. Data Cleaning
+   - Menghapus Spasi Berlebih: Untuk kolom string, spasi berlebih dihapus menggunakan str.strip(). Ini penting untuk memastikan bahwa tidak ada kesalahan dalam analisis yang disebabkan oleh spasi yang tidak terlihat.
+   - Memfilter Data: Data difilter untuk menghapus entri yang tidak valid:
+      - Quantity Negatif: Menghapus transaksi dengan Quantity kurang dari atau sama dengan nol, yang tidak relevan untuk analisis penjualan.
+      - UnitPrice Negatif: Menghapus transaksi dengan UnitPrice kurang dari atau sama dengan nol, yang menunjukkan kesalahan dalam data atau item gratis.
+   - CustomerID Kosong: Menghapus entri di mana CustomerID tidak ada, karena ini tidak memberikan informasi yang berguna untuk analisis pelanggan.
+   - Konversi Format Tanggal: Kolom InvoiceDate diubah menjadi format datetime menggunakan pd.to_datetime(), yang memungkinkan analisis temporal yang lebih baik.
+   - Output Pembersihan: Setelah pembersihan, jumlah data yang tersisa dan jumlah missing values ditampilkan. Ini memberikan gambaran tentang seberapa banyak data yang hilang dan seberapa bersih data setelah proses pembersihan.
+3. Feature Engineering
+   Menambahkan Fitur Waktu:
+   - Year: Menyimpan tahun dari InvoiceDate.
+   - Month: Menyimpan bulan dari InvoiceDate.
+   - DayOfWeek: Menyimpan hari dalam seminggu dari InvoiceDate, di mana 0=Senin, 1=Selasa, dan seterusnya. Ini memungkinkan analisis berdasarkan waktu, seperti tren penjualan bulanan atau harian.
+   - TotalAmount: Dihitung dengan mengalikan Quantity dan UnitPrice. Ini memberikan informasi tentang nilai total dari setiap transaksi, yang penting untuk analisis pendapatan.
+   - PriceCategory: Menggunakan pd.qcut() untuk membagi UnitPrice menjadi empat kategori (Low, Medium, High, Premium) berdasarkan kuantil. Ini membantu dalam segmentasi produk dan analisis perilaku pembelian.
+   - Output Fitur Baru: Setelah fitur ditambahkan, contoh dari fitur baru ditampilkan untuk memastikan bahwa fitur tersebut ditambahkan dengan benar.
+4. Handling Outliers:
+   - Meskipun tidak secara eksplisit disebutkan, penanganan outliers dapat dilakukan selama tahap pembersihan. Misalnya, transaksi dengan Quantity atau UnitPrice yang sangat tinggi atau rendah dibandingkan dengan rata-rata dapat diidentifikasi dan dihapus untuk meningkatkan kualitas data.
+   - Metode statistik seperti IQR (Interquartile Range) atau Z-score dapat digunakan untuk mendeteksi outliers.
+5. Pembuatan Pivot Tabel untuk Sistem Rekomendasi
+    Setelah data dibersihkan, pivot tabel dibuat untuk memudahkan analisis dan rekomendasi. Pivot tabel ini dapat digunakan untuk melihat interaksi antara pelanggan dan produk, yang sangat penting untuk model rekomendasi.
+6. Status Missing Values
+    Setelah semua langkah di atas, status missing values diperiksa kembali. Semua kolom harus terisi lengkap tanpa missing values, memastikan bahwa data siap untuk analisis lebih lanjut.
 
 Alasan Pentingnya Data Preparation
 Tahapan data preparation sangat penting karena:
