@@ -358,24 +358,19 @@ Dengan mengikuti tahapan data preparation ini, kami dapat memastikan bahwa data 
 Cosine Similarity
 Cosine Similarity adalah metrik yang digunakan untuk mengukur seberapa mirip dua vektor dalam ruang multidimensi. Dalam konteks sistem rekomendasi, cosine similarity sering digunakan untuk menentukan kesamaan antara item (seperti produk) berdasarkan fitur-fitur yang dimiliki. Metrik ini sangat berguna dalam pendekatan Collaborative Filtering dan Content-Based Filtering. 
 
-Rumus Cosine Similarity
 Cosine similarity dihitung dengan rumus berikut:
 
-
-\[
-\text{Cosine Similarity} = \frac{A \cdot B}{\|A\| \|B\|}
-\]
+<img width="219" alt="Screenshot 2024-11-24 at 16 55 55" src="https://github.com/user-attachments/assets/8a557a0d-255a-499d-b3c4-97118ee8a8a5">
 
 Di mana:
-
-- A dan 𝐵 adalah dua vektor yang mewakili item yang dibandingkan.
-- A⋅B adalah hasil kali dot antara dua vektor.
-- ∥A∥ dan ∥B∥ adalah panjang dari vektor A dan B.
+- \( A \) dan \( B \) adalah dua vektor yang mewakili item yang dibandingkan.
+- \( A \cdot B \) adalah hasil kali dot antara dua vektor.
+- \( \|A\| \) dan \( \|B\| \) adalah norma (panjang) dari vektor \( A \) dan \( B \).
 
 Nilai cosine similarity berkisar antara -1 hingga 1:
-- 1 menunjukkan bahwa dua vektor identik (sama arah).
-- 0 menunjukkan bahwa dua vektor tidak memiliki kesamaan (tegak lurus).
-- 1 menunjukkan bahwa dua vektor berlawanan arah.
+- **1** menunjukkan bahwa dua vektor identik (sama arah).
+- **0** menunjukkan bahwa dua vektor tidak memiliki kesamaan (tegak lurus).
+- **-1** menunjukkan bahwa dua vektor berlawanan arah.
 
 Berdasakan hasil pengujian pada bagian model diperoleh nilai Cosine similiarity berikut ini adalah (3345, 3345).
 
