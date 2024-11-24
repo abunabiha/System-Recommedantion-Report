@@ -228,35 +228,124 @@ Berdasarkan ringkasa diatas dapat disimpulkan bahwa:
 
 
 ## Data Preparation
-Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting untuk memastikan bahwa data siap digunakan dalam analisis dan model rekomendasi. Proses yang dilakukan adalah sebagai berikut:
-1. Load Data
-   - Data dimuat dari file CSV dengan mencoba beberapa encoding (latin-1, iso-8859-1, cp1252). Ini penting karena file CSV dapat disimpan dengan berbagai encoding, dan memilih yang tepat memastikan data dibaca dengan benar.
-   - Jika data berhasil dimuat, pesan konfirmasi ditampilkan, dan DataFrame (df) dikembalikan. Jika semua encoding gagal, sebuah exception dilempar untuk memberi tahu pengguna bahwa file tidak dapat dibaca.
-   - Informasi Dataset: Setelah data dimuat, informasi dasar tentang dataset ditampilkan menggunakan df.info(), yang mencakup jumlah entri, jumlah kolom, dan tipe data dari setiap kolom. Ini memberikan gambaran awal tentang struktur data.
-2. Data Cleaning
-   - Menghapus Spasi Berlebih: Untuk kolom string, spasi berlebih dihapus menggunakan str.strip(). Ini penting untuk memastikan bahwa tidak ada kesalahan dalam analisis yang disebabkan oleh spasi yang tidak terlihat.
-   - Memfilter Data: Data difilter untuk menghapus entri yang tidak valid:
-      - Quantity Negatif: Menghapus transaksi dengan Quantity kurang dari atau sama dengan nol, yang tidak relevan untuk analisis penjualan.
-      - UnitPrice Negatif: Menghapus transaksi dengan UnitPrice kurang dari atau sama dengan nol, yang menunjukkan kesalahan dalam data atau item gratis.
-   - CustomerID Kosong: Menghapus entri di mana CustomerID tidak ada, karena ini tidak memberikan informasi yang berguna untuk analisis pelanggan.
-   - Konversi Format Tanggal: Kolom InvoiceDate diubah menjadi format datetime menggunakan pd.to_datetime(), yang memungkinkan analisis temporal yang lebih baik.
-   - Output Pembersihan: Setelah pembersihan, jumlah data yang tersisa dan jumlah missing values ditampilkan. Ini memberikan gambaran tentang seberapa banyak data yang hilang dan seberapa bersih data setelah proses pembersihan.
-3. Feature Engineering
-   Menambahkan Fitur Waktu:
-   - Year: Menyimpan tahun dari InvoiceDate.
-   - Month: Menyimpan bulan dari InvoiceDate.
-   - DayOfWeek: Menyimpan hari dalam seminggu dari InvoiceDate, di mana 0=Senin, 1=Selasa, dan seterusnya. Ini memungkinkan analisis berdasarkan waktu, seperti tren penjualan bulanan atau harian.
-   - TotalAmount: Dihitung dengan mengalikan Quantity dan UnitPrice. Ini memberikan informasi tentang nilai total dari setiap transaksi, yang penting untuk analisis pendapatan.
-   - PriceCategory: Menggunakan pd.qcut() untuk membagi UnitPrice menjadi empat kategori (Low, Medium, High, Premium) berdasarkan kuantil. Ini membantu dalam segmentasi produk dan analisis perilaku pembelian.
-   - Output Fitur Baru: Setelah fitur ditambahkan, contoh dari fitur baru ditampilkan untuk memastikan bahwa fitur tersebut ditambahkan dengan benar.
-4. Handling Outliers:
-   - Meskipun tidak secara eksplisit disebutkan, penanganan outliers dapat dilakukan selama tahap pembersihan. Misalnya, transaksi dengan Quantity atau UnitPrice yang sangat tinggi atau rendah dibandingkan dengan rata-rata dapat diidentifikasi dan dihapus untuk meningkatkan kualitas data.
-   - Metode statistik seperti IQR (Interquartile Range) atau Z-score dapat digunakan untuk mendeteksi outliers.
-5. Pembuatan Pivot Tabel untuk Sistem Rekomendasi
-    Setelah data dibersihkan, pivot tabel dibuat untuk memudahkan analisis dan rekomendasi. Pivot tabel ini dapat digunakan untuk melihat interaksi antara pelanggan dan produk, yang sangat penting untuk model rekomendasi.
-6. Status Missing Values
-    Setelah semua langkah di atas, status missing values diperiksa kembali. Semua kolom harus terisi lengkap tanpa missing values, memastikan bahwa data siap untuk analisis lebih lanjut.
+Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting untuk memastikan bahwa data siap digunakan dalam analisis dan model rekomendasi. Proses yang dilakukan adalah sebagai berikut :
 
+**1. Load Data**
+- **Deskripsi**: 
+  Data dimuat dari file CSV dengan mencoba beberapa encoding (latin-1, iso-8859-1, cp1252). Ini penting karena file CSV dapat disimpan dengan berbagai encoding, dan memilih yang tepat memastikan data dibaca dengan benar.
+  
+- **Implementasi**:
+  ```python
+  def load_data(file_path):
+      encodings = ['latin-1', 'iso-8859-1', 'cp1252']
+      for encoding in encodings:
+          try:
+              df = pd.read_csv(file_path, encoding=encoding)
+              print(f"Data berhasil dimuat dengan encoding: {encoding}")
+              return df
+          except:
+              continue
+      raise Exception("Gagal membaca file. Silakan periksa format file CSV Anda")
+  ```
+  
+- **Output**: 
+  Setelah data dimuat, informasi dasar tentang dataset ditampilkan menggunakan `df.info()`, yang mencakup jumlah entri, jumlah kolom, dan tipe data dari setiap kolom. Ini memberikan gambaran awal tentang struktur data.
+
+**2. Data Cleaning**
+- **Deskripsi**: 
+  Proses ini bertujuan untuk menghapus data yang tidak valid dan memastikan bahwa data dalam format yang konsisten. Data yang bersih sangat penting untuk analisis yang akurat dan model yang efektif.
+  
+- **Langkah-langkah**:
+  - **Menghapus Spasi Berlebih**: 
+    Untuk kolom string, spasi berlebih dihapus menggunakan `str.strip()`. Ini penting untuk memastikan bahwa tidak ada kesalahan dalam analisis yang disebabkan oleh spasi yang tidak terlihat.
+    
+  - **Memfilter Data**: 
+    Data difilter untuk menghapus entri yang tidak valid:
+    - **Quantity Negatif**: Menghapus transaksi dengan Quantity kurang dari atau sama dengan nol, yang tidak relevan untuk analisis penjualan.
+    - **UnitPrice Negatif**: Menghapus transaksi dengan UnitPrice kurang dari atau sama dengan nol, yang menunjukkan kesalahan dalam data atau item gratis.
+    
+  - **CustomerID Kosong**: 
+    Menghapus entri di mana CustomerID tidak ada, karena ini tidak memberikan informasi yang berguna untuk analisis pelanggan.
+    
+  - **Konversi Format Tanggal**: 
+    Kolom InvoiceDate diubah menjadi format datetime menggunakan `pd.to_datetime()`, yang memungkinkan analisis temporal yang lebih baik.
+    
+- **Output Pembersihan**: 
+  Setelah pembersihan, jumlah data yang tersisa dan jumlah missing values ditampilkan. Ini memberikan gambaran tentang seberapa banyak data yang hilang dan seberapa bersih data setelah proses pembersihan.
+
+**3. Feature Engineering**
+- **Deskripsi**: 
+  Menambahkan fitur baru yang dapat membantu dalam analisis dan model rekomendasi. Fitur yang relevan dapat meningkatkan kemampuan model dalam memberikan rekomendasi yang akurat.
+  
+- **Langkah-langkah**:
+  - **Menambahkan Fitur Waktu**:
+    - **Year**: Menyimpan tahun dari InvoiceDate untuk analisis temporal.
+    - **Month**: Menyimpan bulan dari InvoiceDate untuk melihat tren bulanan.
+    - **DayOfWeek**: Menyimpan hari dalam seminggu dari InvoiceDate, di mana 0=Senin, 1=Selasa, dan seterusnya. Ini memungkinkan analisis berdasarkan waktu, seperti tren penjualan harian.
+    
+  - **TotalAmount**: 
+    Dihitung dengan mengalikan Quantity dan UnitPrice. Ini memberikan informasi tentang nilai total dari setiap transaksi, yang penting untuk analisis pendapatan.
+    
+  - **PriceCategory**: 
+    Menggunakan `pd.qcut()` untuk membagi UnitPrice menjadi empat kategori (Low, Medium, High, Premium) berdasarkan kuantil. Ini membantu dalam segmentasi produk dan analisis perilaku pembelian.
+    
+- **Output**: 
+  Setelah fitur ditambahkan, contoh dari fitur baru ditampilkan untuk memastikan bahwa fitur tersebut ditambahkan dengan benar.
+
+**4. Handling Outliers**
+- **Deskripsi**: 
+  Mengidentifikasi dan menangani outliers yang dapat mempengaruhi analisis. Outliers dapat menyebabkan distorsi dalam hasil analisis dan model.
+  
+- **Metode**:
+  - Menggunakan metode statistik seperti IQR (Interquartile Range) atau Z-score untuk mendeteksi outliers.
+  - Menghapus transaksi dengan Quantity atau UnitPrice yang sangat tinggi atau rendah dibandingkan dengan rata-rata untuk meningkatkan kualitas data.
+
+**5. Normalisasi**
+- **Deskripsi**: 
+  Normalisasi dilakukan untuk memastikan bahwa fitur numerik berada dalam skala yang sama, yang penting untuk algoritma yang sensitif terhadap skala, seperti cosine similarity.
+  
+- **Implementasi**:
+  ```python
+  from sklearn.preprocessing import MinMaxScaler
+
+  scaler = MinMaxScaler()
+  df[['Quantity', 'UnitPrice', 'TotalAmount']] = scaler.fit_transform(df[['Quantity', 'UnitPrice', 'TotalAmount']])
+  ```
+  
+- **Output**: 
+  Fitur seperti `Quantity`, `UnitPrice`, dan `TotalAmount` dinormalisasi ke rentang [0, 1], sehingga semua fitur berada dalam skala yang sama.
+
+**6. Pembuatan Pivot Tabel untuk Sistem Rekomendasi**
+- **Deskripsi**: 
+  Pivot tabel dibuat untuk memudahkan analisis dan rekomendasi. Pivot tabel ini memungkinkan kita untuk melihat interaksi antara pelanggan dan produk, yang sangat penting untuk model rekomendasi.
+  
+- **Implementasi**:
+  ```python
+  pivot_table = df.pivot_table(index='CustomerID', columns='StockCode', values='Quantity', fill_value=0)
+  ```
+
+**7. Split Data**
+- **Deskripsi**: 
+  Data dibagi menjadi set pelatihan dan pengujian untuk mengevaluasi model rekomendasi. Pembagian ini penting untuk menghindari overfitting dan untuk menguji kemampuan model pada data yang belum pernah dilihat sebelumnya.
+  
+- **Implementasi**:
+  ```python
+  from sklearn.model_selection import train_test_split
+
+  train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
+  ```
+  
+- **Output**: 
+  80% data digunakan untuk pelatihan dan 20% untuk pengujian, memastikan bahwa model dapat dievaluasi dengan baik.
+
+**8. Status Missing Values**
+- **Deskripsi**: 
+  Setelah semua langkah di atas, status missing values diperiksa kembali untuk memastikan bahwa tidak ada data yang hilang.
+  
+- **Output**: 
+  Semua kolom harus terisi lengkap tanpa missing values, memastikan bahwa data siap untuk analisis lebih lanjut.
+
+---
 Alasan Pentingnya Data Preparation
 Tahapan data preparation sangat penting karena:
 1. Kualitas Data: Data yang bersih dan terstruktur dengan baik meningkatkan kualitas analisis dan hasil model.
@@ -264,7 +353,6 @@ Tahapan data preparation sangat penting karena:
 3. Efisiensi Proses: Memastikan bahwa data siap digunakan menghemat waktu dan sumber daya dalam tahap analisis dan pengembangan model.
 
 Dengan mengikuti tahapan data preparation ini, kami dapat memastikan bahwa data yang digunakan dalam analisis dan model rekomendasi adalah data yang berkualitas dan siap digunakan.
-
 
 ## Modeling
 Cosine Similarity
@@ -414,15 +502,39 @@ Sebagai pertimbangan rekomendasi untuk peningkatan perbaikan model maka diberika
    - Analisis Lebih Dalam yakni dengan melakukan analisis lebih dalam terhadap data untuk memahami pola pembelian pelanggan dan produk yang lebih baik.
    
 # Dampak Model terhadap Business Understanding
+Berdasarkan pada penggunaan metrik evaluasi Precission dan Recall dapat ambil sebuah hasil : 
+1. Content-Based Filtering
+   Content-Based Filtering merekomendasikan item kepada pengguna berdasarkan kesamaan fitur dari item yang telah mereka sukai atau beli sebelumnya, menggunakan fitur seperti Description, UnitPrice, dan fitur tambahan yang dihasilkan dari proses feature engineering. Hasil evaluasi pada grafik menunjukkan bahwa model ini memiliki nilai precision berada nilai di sekitar 0.1, Sementara itu, nilai recall tampaknya sedikit lebih tinggi, mungkin sekitar 0.2 atau lebih rendah, tetapi tetap dalam kisaran yang rendah.
+
+2. Collaborative Filtering 
+   Collaborative Filtering merekomendasikan item berdasarkan interaksi pengguna lain dengan  item tersebut, baik melalui pendekatan user-based maupun item-based. Hasil evaluasi untuk model ini yang ditunjukkan oleh grafik distribusi bahwa nilai precision, terlihat bahwa sebagian besar nilai hingga 0.2, dengan frekuensi tertinggi pada nilai yang lebih rendah. Ini menunjukkan bahwa banyak rekomendasi yang dihasilkan memiliki precision yang rendah, artinya hanya sedikit dari rekomendasi tersebut yang relevan.Sementara itu, grafik recall menunjukkan pola yang serupa, di mana sebagian besar nilai recall juga berada di kisaran 0.0 hingga 0.1. Hal ini mengindikasikan bahwa model tidak berhasil merekomendasikan banyak item relevan dari total item yang seharusnya direkomendasikan.
+
+
+Kesimpulan 
+Meskipun hasil evaluasi menunjukkan nilai precision dan recall yang rendah untuk kedua model, ada beberapa aspek yang dapat dicatat. Pertama, Content-Based Filtering menunjukkan potensi dalam memberikan rekomendasi yang relevan berdasarkan fitur item, yang dapat ditingkatkan dengan penambahan fitur yang lebih beragam dan relevan. Ini memberikan dasar yang kuat untuk pengembangan lebih lanjut, di mana model dapat disempurnakan untuk meningkatkan akurasi rekomendasi.
+Kedua, Collaborative Filtering memiliki keunggulan dalam menangkap preferensi pengguna yang lebih kompleks dengan mempertimbangkan interaksi pengguna lain. Meskipun saat ini hasilnya belum optimal, pendekatan ini membuka peluang untuk eksplorasi lebih lanjut dalam memahami pola perilaku pengguna dan meningkatkan relevansi rekomendasi.
+Dengan melakukan analisis lebih mendalam dan menerapkan teknik yang lebih canggih, seperti hybrid recommendation systems, ada potensi besar untuk meningkatkan performa model. Upaya ini tidak hanya akan meningkatkan kepuasan pengguna, tetapi juga dapat berkontribusi pada peningkatan penjualan dan loyalitas pelanggan.
+Secara keseluruhan, meskipun ada tantangan yang harus dihadapi, fondasi yang ada memberikan peluang untuk pengembangan yang lebih baik di masa depan.
+
+Sebagain pertimbangan rekomendasi untuk peningkatan perbaikan model maka diberikan saran : 
+   - Pengumpulan Data Lebih Banyak yakni dengan mengumpulkan lebih banyak data interaksi untuk meningkatkan kualitas rekomendasi.
+   - Penggunaan Model Hybrid yakni dengan mencoba pendekatan hybrid yang menggabungkan collaborative filtering dan content-based filtering untuk meningkatkan akurasi rekomendasi.
+   - Fine-t uning Parameter yakni dengan melakukan tuning parameter pada model untuk meningkatkan akurasi rekomendasi.
+   - Analisis Lebih Dalam yakni dengan melakukan analisis lebih dalam terhadap data untuk memahami pola pembelian pelanggan dan produk yang lebih baik.
+   
+# Dampak Model terhadap Business Understanding
 Meskipun hasil evaluasi menunjukkan nilai precision dan recall yang rendah untuk kedua model, ada beberapa aspek positif yang dapat dicatat. Pertama, Content-Based Filtering menunjukkan potensi dalam memberikan rekomendasi yang relevan berdasarkan fitur item. Meskipun saat ini nilai precision dan recall berada di kisaran yang rendah, penambahan fitur yang lebih beragam dan relevan dapat meningkatkan akurasi rekomendasi. Hal ini memberikan dasar yang kuat untuk pengembangan lebih lanjut, di mana model dapat disempurnakan untuk meningkatkan pengalaman pelanggan dan, pada gilirannya, meningkatkan kepuasan dan loyalitas pelanggan.
 Kedua, Collaborative Filtering memiliki keunggulan dalam menangkap preferensi pengguna yang lebih kompleks dengan mempertimbangkan interaksi pengguna lain. Meskipun hasilnya belum optimal, pendekatan ini membuka peluang untuk eksplorasi lebih lanjut dalam memahami pola perilaku pengguna. Dengan melakukan analisis lebih mendalam dan menerapkan teknik yang lebih canggih, seperti hybrid recommendation systems, ada potensi besar untuk meningkatkan relevansi rekomendasi. Ini tidak hanya akan meningkatkan kepuasan pengguna, tetapi juga dapat berkontribusi pada peningkatan penjualan dan loyalitas pelanggan.
 
 1. Menjawab Problem Statement
-   Model rekomendasi yang dikembangkan berhasil menjawab problem statement yang diajukan, yaitu meningkatkan pengalaman pelanggan dengan memberikan rekomendasi produk yang relevan. Meskipun hasil evaluasi menunjukkan tantangan dalam hal akurasi, potensi perbaikan melalui pengembangan lebih lanjut memberikan harapan untuk mengatasi masalah ketidakpuasan pelanggan akibat rekomendasi yang tidak akurat.
+
+Model rekomendasi yang dikembangkan berhasil menjawab problem statement yang diajukan, yaitu meningkatkan pengalaman pelanggan dengan memberikan rekomendasi produk yang relevan. Meskipun hasil evaluasi menunjukkan tantangan dalam hal akurasi, potensi perbaikan melalui pengembangan lebih lanjut memberikan harapan untuk mengatasi masalah ketidakpuasan pelanggan akibat rekomendasi yang tidak akurat.
 2. Mencapai Goals yang Diharapkan
-   Model ini juga berupaya mencapai tujuan yang diharapkan, yaitu meningkatkan tingkat konversi penjualan dan kepuasan pelanggan. Dengan sistem rekomendasi yang lebih baik, ada peluang untuk meningkatkan nilai precision dan recall, yang pada gilirannya dapat meningkatkan kemungkinan pelanggan untuk membeli produk yang direkomendasikan. Ini menunjukkan bahwa meskipun saat ini hasilnya belum optimal, ada jalan untuk mencapai tujuan tersebut melalui pengembangan dan optimasi model.
+
+Model ini juga berupaya mencapai tujuan yang diharapkan, yaitu meningkatkan tingkat konversi penjualan dan kepuasan pelanggan. Dengan sistem rekomendasi yang lebih baik, ada peluang untuk meningkatkan nilai precision dan recall, yang pada gilirannya dapat meningkatkan kemungkinan pelanggan untuk membeli produk yang direkomendasikan. Ini menunjukkan bahwa meskipun saat ini hasilnya belum optimal, ada jalan untuk mencapai tujuan tersebut melalui pengembangan dan optimasi model.
 3. Dampak Solusi yang Direncanakan
-   olusi yang direncanakan memberikan dampak positif terhadap bisnis. Dengan sistem rekomendasi yang efektif, perusahaan dapat meningkatkan loyalitas pelanggan dan mendorong pembelian berulang. Analisis lebih mendalam dan penerapan teknik yang lebih canggih akan memungkinkan perusahaan untuk memahami preferensi pelanggan dengan lebih baik, sehingga dapat menyesuaikan strategi pemasaran dan penawaran produk. Dengan demikian, meskipun ada tantangan yang harus dihadapi, fondasi yang ada memberikan peluang untuk pengembangan yang lebih baik di masa depan.
+
+Solusi yang direncanakan memberikan dampak positif terhadap bisnis. Dengan sistem rekomendasi yang efektif, perusahaan dapat meningkatkan loyalitas pelanggan dan mendorong pembelian berulang. Analisis lebih mendalam dan penerapan teknik yang lebih canggih akan memungkinkan perusahaan untuk memahami preferensi pelanggan dengan lebih baik, sehingga dapat menyesuaikan strategi pemasaran dan penawaran produk. Dengan demikian, meskipun ada tantangan yang harus dihadapi, fondasi yang ada memberikan peluang untuk pengembangan yang lebih baik di masa depan.
   
 
 ## Referensi
