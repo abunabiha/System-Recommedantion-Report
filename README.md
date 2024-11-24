@@ -276,9 +276,21 @@ Pada tahapan ini, kami membahas model sistem rekomendasi yang dikembangkan untuk
    Kekurangan:
    - Memerlukan pemahaman yang baik tentang fitur produk.
    - Mungkin tidak dapat menangkap preferensi pengguna yang lebih kompleks.
-- Berikut adalah 5 Rekomendasi yang dihasilkan menggunakan Content-Base Filtering 
+- Berikut adalah hasil  dari penerapan Content-Base Filtering
+  
 <img width="533" alt="Screenshot 2024-11-24 at 13 35 58" src="https://github.com/user-attachments/assets/d8632c88-7987-4cfa-9b53-0d1cad60fefc">
 
+![441ca69e-fb22-4028-988b-25f996542176](https://github.com/user-attachments/assets/34a69a22-a31b-48a7-9548-0a3727d3ed98)
+
+![56e203a3-8121-4ba0-a1fa-30899c14aa11](https://github.com/user-attachments/assets/ba07df23-f8b0-42cd-84c5-a81f1c4cc815)
+
+Keterangan :
+Keterangan :
+- Top-5 rekomendasi menunjukkan bahwa model dapat memberikan rekomendasi yang relevan dan bermanfaat untuk pelanggan tertentu. Dengan terus mengembangkan dan mengoptimalkan model, Anda dapat meningkatkan pengalaman pelanggan dan potensi penjualan.
+- Semua rekomendasi ditujukan untuk pelanggan dengan CustomerID 14096. Ini menunjukkan bahwa model berhasil memberikan rekomendasi yang relevan untuk pelanggan tertentu berdasarkan riway
+- Rekomendasi mencakup berbagai produk, mulai dari tas (BLUE DISCO HANDBAG) hingga peralatan rumah tangga (TWO DOOR CURIO CABINET). Ini menunjukkan bahwa model dapat merekomendasikan produk yang beragam, yang mungkin menarik bagi pelanggan tersebut.
+- Nilai similarity berkisar antara 0.345528 hingga 0.467172. Ini menunjukkan bahwa produk-produk ini memiliki tingkat kemiripan yang cukup baik dengan produk yang sebelumnya dibeli oleh pelanggan.
+-  Nilai similarity yang lebih tinggi menunjukkan bahwa produk tersebut lebih relevan dengan preferensi pelanggan, yang dapat meningkatkan kemungkinan pelanggan untuk membeli produk tersebut.
 
 2. Collaborative Filtering:
    Pendekatan ini menggunakan data interaksi pengguna dengan produk untuk memberikan rekomendasi. Dalam hal ini, kami menggunakan cosine similarity untuk mengukur kesamaan antara produk berdasarkan pembelian yang dilakukan oleh pelanggan.
