@@ -104,8 +104,8 @@ Berdasarkan grafik yang menunjukkan 10 produk terlaris, berikut adalah beberapa 
 Grafik ini memberikan wawasan berharga tentang preferensi pelanggan dan pola pembelian. Dengan analisis ini, perusahaan dapat merumuskan strategi pemasaran, pengelolaan inventaris, dan pengembangan produk yang lebih baik untuk meningkatkan penjualan dan kepuasan pelanggan.
 
 3. Informasi Distribusi Harga Produk
-
-![alt text](DistribusiHargaProduk.png)
+   
+![DistribusiHargaProduk](https://github.com/user-attachments/assets/e9b9ec15-0025-4822-82e8-a1aa15769336)
 
 Berdasarkan histogram yang menunjukkan distribusi harga produk, berikut adalah beberapa analisis yang dapat dilakukan:
 1. Konsentrasi Harga:
@@ -332,14 +332,14 @@ Pada bagian ini, kami menggunakan metrik evaluasi untuk menilai kinerja model re
 
 Berdasarkan pada penggunaan metrik evaluasi Precission dan Recall dapat ambil sebuah hasil : 
 1. Content-Based Filtering
-   Content-Based Filtering merekomendasikan item kepada pengguna berdasarkan kesamaan fitur dari item yang telah mereka sukai atau beli sebelumnya, menggunakan fitur seperti Description, UnitPrice, dan fitur tambahan yang dihasilkan dari proses feature engineering. Hasil evaluasi menunjukkan bahwa model ini memiliki precision sebesar 0.75, recall 0.65, dan F1 score 0.69. Kelebihan dari model ini adalah kemampuannya untuk memberikan rekomendasi yang relevan berdasarkan riwayat pembelian pelanggan, dengan precision yang tinggi menunjukkan bahwa sebagian besar rekomendasi yang diberikan adalah item yang relevan. Namun, kekurangan dari model ini adalah recall yang lebih rendah, yang menunjukkan bahwa masih ada item relevan yang tidak berhasil direkomendasikan, serta ketidakmampuannya untuk menangkap preferensi pengguna yang lebih kompleks karena hanya bergantung pada fitur item.
+   Content-Based Filtering merekomendasikan item kepada pengguna berdasarkan kesamaan fitur dari item yang telah mereka sukai atau beli sebelumnya, menggunakan fitur seperti Description, UnitPrice, dan fitur tambahan yang dihasilkan dari proses feature engineering. Hasil evaluasi menunjukkan bahwa model ini memiliki precision sebesar 0.75, recall 0.65, dan F1 score 0.69. Kelebihan dari model ini adalah kemampuannya untuk memberikan rekomendasi yang relevan berdasarkan riwayat pembelian pelanggan, dengan precision yang tinggi menunjukkan bahwa sebagian besar rekomendasi yang diberikan adalah item yang relevan. Namun, kekurangan dari model ini adalah recall yang lebih rendah, yang menunjukkan bahwa masih ada item relevan yang tidak berhasil direkomendasikan, serta ketidakmampuannya untuk menangkap preferensi pengguna yang lebih kompleks karena hanya bergantung pada fitur item. Berikut hasil evaluasi dalam bentuk grafiknya. 
 
    ![441ca69e-fb22-4028-988b-25f996542176](https://github.com/user-attachments/assets/34a69a22-a31b-48a7-9548-0a3727d3ed98)
 
 ![56e203a3-8121-4ba0-a1fa-30899c14aa11](https://github.com/user-attachments/assets/ba07df23-f8b0-42cd-84c5-a81f1c4cc815)
 
 3. Collaborative Filtering 
-   Collaborative Filtering merekomendasikan item berdasarkan interaksi pengguna lain dengan  item tersebut, baik melalui pendekatan user-based maupun item-based. Hasil evaluasi untuk model ini menunjukkan precision sebesar 0.70, recall 0.60, dan F1 score 0.65. Kelebihan dari Collaborative Filtering adalah kemampuannya untuk menangkap preferensi pengguna yang lebih kompleks dengan mempertimbangkan interaksi pengguna lain, sehingga dapat memberikan rekomendasi yang lebih beragam. Namun, model ini juga memiliki kekurangan, seperti precision yang lebih rendah dibandingkan dengan Content-Based Filtering, yang menunjukkan bahwa beberapa rekomendasi mungkin tidak relevan, serta masalah cold start yang dihadapi ketika memberikan rekomendasi untuk pengguna baru atau item baru yang belum memiliki interaksi.
+   Collaborative Filtering merekomendasikan item berdasarkan interaksi pengguna lain dengan  item tersebut, baik melalui pendekatan user-based maupun item-based. Hasil evaluasi untuk model ini menunjukkan precision sebesar 0.70, recall 0.60, dan F1 score 0.65. Kelebihan dari Collaborative Filtering adalah kemampuannya untuk menangkap preferensi pengguna yang lebih kompleks dengan mempertimbangkan interaksi pengguna lain, sehingga dapat memberikan rekomendasi yang lebih beragam. Namun, model ini juga memiliki kekurangan, seperti precision yang lebih rendah dibandingkan dengan Content-Based Filtering, yang menunjukkan bahwa beberapa rekomendasi mungkin tidak relevan, serta masalah cold start yang dihadapi ketika memberikan rekomendasi untuk pengguna baru atau item baru yang belum memiliki interaksi. Berikut hasil evaluasi dalam bentuk grafiknya. 
    
 ![d195144e-d2d4-4ed3-b495-c54d15d85b84](https://github.com/user-attachments/assets/d0f596d6-f5ab-4bfb-a5bf-a3b4f08e5878)
 
