@@ -523,13 +523,15 @@ Kedua, Collaborative Filtering memiliki keunggulan dalam menangkap preferensi pe
 
 1. Menjawab Problem Statement
 
-Model rekomendasi yang dikembangkan berhasil menjawab problem statement yang diajukan, yaitu meningkatkan pengalaman pelanggan dengan memberikan rekomendasi produk yang relevan. Meskipun hasil evaluasi menunjukkan tantangan dalam hal akurasi, potensi perbaikan melalui pengembangan lebih lanjut memberikan harapan untuk mengatasi masalah ketidakpuasan pelanggan akibat rekomendasi yang tidak akurat.
+    Model rekomendasi yang dikembangkan berhasil menjawab problem statement yang diajukan, yaitu meningkatkan pengalaman pelanggan dengan memberikan rekomendasi produk yang relevan. Meskipun hasil evaluasi menunjukkan tantangan dalam hal akurasi, potensi perbaikan melalui pengembangan lebih lanjut memberikan harapan untuk mengatasi masalah ketidakpuasan pelanggan akibat rekomendasi yang tidak akurat.
+
 2. Mencapai Goals yang Diharapkan
+   
+    Model ini juga berupaya mencapai tujuan yang diharapkan, yaitu meningkatkan tingkat konversi penjualan dan kepuasan pelanggan. Dengan sistem rekomendasi yang lebih baik, ada peluang untuk meningkatkan nilai precision dan recall, yang pada gilirannya dapat meningkatkan kemungkinan pelanggan untuk membeli produk yang direkomendasikan. Ini menunjukkan bahwa meskipun saat ini hasilnya belum optimal, ada jalan untuk mencapai tujuan tersebut melalui pengembangan dan optimasi model.
+   
+4. Dampak Solusi yang Direncanakan
 
-Model ini juga berupaya mencapai tujuan yang diharapkan, yaitu meningkatkan tingkat konversi penjualan dan kepuasan pelanggan. Dengan sistem rekomendasi yang lebih baik, ada peluang untuk meningkatkan nilai precision dan recall, yang pada gilirannya dapat meningkatkan kemungkinan pelanggan untuk membeli produk yang direkomendasikan. Ini menunjukkan bahwa meskipun saat ini hasilnya belum optimal, ada jalan untuk mencapai tujuan tersebut melalui pengembangan dan optimasi model.
-3. Dampak Solusi yang Direncanakan
-
-Solusi yang direncanakan memberikan dampak positif terhadap bisnis. Dengan sistem rekomendasi yang efektif, perusahaan dapat meningkatkan loyalitas pelanggan dan mendorong pembelian berulang. Analisis lebih mendalam dan penerapan teknik yang lebih canggih akan memungkinkan perusahaan untuk memahami preferensi pelanggan dengan lebih baik, sehingga dapat menyesuaikan strategi pemasaran dan penawaran produk. Dengan demikian, meskipun ada tantangan yang harus dihadapi, fondasi yang ada memberikan peluang untuk pengembangan yang lebih baik di masa depan.
+    Solusi yang direncanakan memberikan dampak positif terhadap bisnis. Dengan sistem rekomendasi yang efektif, perusahaan dapat meningkatkan loyalitas pelanggan dan mendorong pembelian berulang. Analisis lebih mendalam dan penerapan teknik yang lebih canggih akan memungkinkan perusahaan untuk memahami preferensi pelanggan dengan lebih baik, sehingga dapat menyesuaikan strategi pemasaran dan penawaran produk. Dengan demikian, meskipun ada tantangan yang harus dihadapi, fondasi yang ada memberikan peluang untuk pengembangan yang lebih baik di masa depan.
   
 
 ## Referensi
