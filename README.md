@@ -280,9 +280,6 @@ Berikut adalah hasil  dari penerapan Content-Base Filtering
   
 <img width="533" alt="Screenshot 2024-11-24 at 13 35 58" src="https://github.com/user-attachments/assets/d8632c88-7987-4cfa-9b53-0d1cad60fefc">
 
-![441ca69e-fb22-4028-988b-25f996542176](https://github.com/user-attachments/assets/34a69a22-a31b-48a7-9548-0a3727d3ed98)
-
-![56e203a3-8121-4ba0-a1fa-30899c14aa11](https://github.com/user-attachments/assets/ba07df23-f8b0-42cd-84c5-a81f1c4cc815)
 
 Keterangan :
 - Top-5 rekomendasi menunjukkan bahwa model dapat memberikan rekomendasi yang relevan dan bermanfaat untuk pelanggan tertentu. Dengan terus mengembangkan dan mengoptimalkan model, Anda dapat meningkatkan pengalaman pelanggan dan potensi penjualan.
@@ -302,13 +299,9 @@ Keterangan :
    - Memerlukan data yang cukup banyak untuk menghasilkan rekomendasi yang akurat.
    - Rentan terhadap cold start problem, di mana produk baru atau pengguna baru tidak memiliki cukup data untuk memberikan rekomendasi yang baik.
 
-Berikut adalah hasil  dari penerapan Content-Base Filtering
+Berikut adalah hasil  dari penerapan Collaboratif Filtering
 
 <img width="539" alt="Screenshot 2024-11-24 at 13 40 51" src="https://github.com/user-attachments/assets/11af7475-4011-4f18-8aff-2e82e2a34f82">
-
-![d195144e-d2d4-4ed3-b495-c54d15d85b84](https://github.com/user-attachments/assets/d0f596d6-f5ab-4bfb-a5bf-a3b4f08e5878)
-
-![ded2d8f5-a7ae-4014-beee-40bdf57271d3](https://github.com/user-attachments/assets/6d1abf65-9bc8-496e-bb10-83cabe7134b8)
 
 Keterangan :
 - Top-5 rekomendasi menunjukkan bahwa model dapat memberikan rekomendasi yang relevan dan bermanfaat untuk pelanggan tertentu. Dengan terus mengembangkan dan mengoptimalkan model, Anda dapat meningkatkan pengalaman pelanggan dan potensi penjualan.
@@ -340,8 +333,18 @@ Pada bagian ini, kami menggunakan metrik evaluasi untuk menilai kinerja model re
 Berdasarkan pada penggunaan metrik evaluasi Precission dan Recall dapat ambil sebuah hasil : 
 1. Content-Based Filtering
    Content-Based Filtering merekomendasikan item kepada pengguna berdasarkan kesamaan fitur dari item yang telah mereka sukai atau beli sebelumnya, menggunakan fitur seperti Description, UnitPrice, dan fitur tambahan yang dihasilkan dari proses feature engineering. Hasil evaluasi menunjukkan bahwa model ini memiliki precision sebesar 0.75, recall 0.65, dan F1 score 0.69. Kelebihan dari model ini adalah kemampuannya untuk memberikan rekomendasi yang relevan berdasarkan riwayat pembelian pelanggan, dengan precision yang tinggi menunjukkan bahwa sebagian besar rekomendasi yang diberikan adalah item yang relevan. Namun, kekurangan dari model ini adalah recall yang lebih rendah, yang menunjukkan bahwa masih ada item relevan yang tidak berhasil direkomendasikan, serta ketidakmampuannya untuk menangkap preferensi pengguna yang lebih kompleks karena hanya bergantung pada fitur item.
-2. Collaborative Filtering 
+
+   ![441ca69e-fb22-4028-988b-25f996542176](https://github.com/user-attachments/assets/34a69a22-a31b-48a7-9548-0a3727d3ed98)
+
+![56e203a3-8121-4ba0-a1fa-30899c14aa11](https://github.com/user-attachments/assets/ba07df23-f8b0-42cd-84c5-a81f1c4cc815)
+
+3. Collaborative Filtering 
    Collaborative Filtering merekomendasikan item berdasarkan interaksi pengguna lain dengan  item tersebut, baik melalui pendekatan user-based maupun item-based. Hasil evaluasi untuk model ini menunjukkan precision sebesar 0.70, recall 0.60, dan F1 score 0.65. Kelebihan dari Collaborative Filtering adalah kemampuannya untuk menangkap preferensi pengguna yang lebih kompleks dengan mempertimbangkan interaksi pengguna lain, sehingga dapat memberikan rekomendasi yang lebih beragam. Namun, model ini juga memiliki kekurangan, seperti precision yang lebih rendah dibandingkan dengan Content-Based Filtering, yang menunjukkan bahwa beberapa rekomendasi mungkin tidak relevan, serta masalah cold start yang dihadapi ketika memberikan rekomendasi untuk pengguna baru atau item baru yang belum memiliki interaksi.
+   
+![d195144e-d2d4-4ed3-b495-c54d15d85b84](https://github.com/user-attachments/assets/d0f596d6-f5ab-4bfb-a5bf-a3b4f08e5878)
+
+![ded2d8f5-a7ae-4014-beee-40bdf57271d3](https://github.com/user-attachments/assets/6d1abf65-9bc8-496e-bb10-83cabe7134b8)
+
 
 Sehingga dapat disimpulkan bahwa secara keseluruhan, Content-Based Filtering menunjukkan performa yang lebih baik dalam hal precision dan recall, menjadikannya pilihan yang baik untuk memberikan rekomendasi yang relevan berdasarkan fitur item. Sementara itu, Collaborative Filtering memiliki keunggulan dalam menangkap preferensi pengguna yang lebih kompleks, tetapi menghadapi tantangan dalam hal relevansi rekomendasi. Oleh karena itu, kombinasi kedua metode ini (Hybrid Approach) dapat menjadi solusi yang lebih baik, memanfaatkan kelebihan masing-masing metode untuk meningkatkan kualitas rekomendasi dan pengalaman pengguna secara keseluruhan.
 
