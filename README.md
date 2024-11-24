@@ -267,8 +267,47 @@ Dengan mengikuti tahapan data preparation ini, kami dapat memastikan bahwa data 
 
 
 ## Modeling
-Pada tahapan ini, kami membahas model sistem rekomendasi yang dikembangkan untuk menyelesaikan permasalahan rekomendasi produk. Dua pendekatan yang digunakan adalah:
-1. Content-Based Filtering:
+Cosine Similarity
+Cosine Similarity adalah metrik yang digunakan untuk mengukur seberapa mirip dua vektor dalam ruang multidimensi. Dalam konteks sistem rekomendasi, cosine similarity sering digunakan untuk menentukan kesamaan antara item (seperti produk) berdasarkan fitur-fitur yang dimiliki. Metrik ini sangat berguna dalam pendekatan Collaborative Filtering dan Content-Based Filtering. 
+
+Rumus Cosine Similarity
+Cosine similarity dihitung dengan rumus berikut:
+
+
+\[
+\text{Cosine Similarity} = \frac{A \cdot B}{\|A\| \|B\|}
+\]
+
+Di mana:
+
+- A dan 𝐵 adalah dua vektor yang mewakili item yang dibandingkan.
+- A⋅B adalah hasil kali dot antara dua vektor.
+- ∥A∥ dan ∥B∥ adalah panjang dari vektor A dan B.
+
+Nilai cosine similarity berkisar antara -1 hingga 1:
+- 1 menunjukkan bahwa dua vektor identik (sama arah).
+- 0 menunjukkan bahwa dua vektor tidak memiliki kesamaan (tegak lurus).
+- 1 menunjukkan bahwa dua vektor berlawanan arah.
+
+Berdasakan hasil pengujian pada bagian model diperoleh nilai Cosine similiarity berikut ini adalah (3345, 3345).
+
+        Sample pivot table (5 baris pertama, 5 kolom pertama):
+        StockCode   10002  10080  10120  10123C  10124A
+        CustomerID                                     
+        12347.0         0      0      0       0       0
+        12348.0         0      0      0       0       0
+        12349.0         0      0      0       0       0
+        12350.0         0      0      0       0       0
+        12352.0         0      0      0       0       0
+        
+        Dimensi similarity matrix: (3345, 3345)
+
+Ini menunjukkan bahwa terdapat 3,345 produk yang dibandingkan satu sama lain untuk menghitung kesamaan. Setiap sel dalam matriks ini berisi nilai cosine similarity antara dua produk, yang menunjukkan seberapa mirip produk-produk tersebut berdasarkan fitur yang ada.
+
+Penerapan dalam Sistem Rekomendasi
+1. Content-Based Filtering
+   Dalam pendekatan ini, cosine similarity digunakan untuk menghitung kesamaan antara produk berdasarkan fitur-fitur yang ada, seperti deskripsi, harga, dan kategori. Misalnya, jika dua produk memiliki deskripsi yang mirip, mereka akan memiliki nilai cosine similarity yang tinggi, sehingga sistem dapat merekomendasikan produk tersebut kepada pengguna yang telah membeli salah satu dari produk tersebut.
+
    Pendekatan ini memberikan rekomendasi berdasarkan karakteristik produk yang telah dibeli sebelumnya oleh pengguna. Misalnya, jika seorang pengguna membeli produk dengan deskripsi tertentu, sistem akan merekomendasikan produk lain dengan deskripsi yang mirip.
    Kelebihan:
    - Dapat memberikan rekomendasi yang relevan meskipun pengguna baru atau produk baru.
@@ -280,6 +319,9 @@ Berikut adalah hasil  dari penerapan Content-Base Filtering
   
 <img width="533" alt="Screenshot 2024-11-24 at 13 35 58" src="https://github.com/user-attachments/assets/d8632c88-7987-4cfa-9b53-0d1cad60fefc">
 
+![441ca69e-fb22-4028-988b-25f996542176](https://github.com/user-attachments/assets/34a69a22-a31b-48a7-9548-0a3727d3ed98)
+
+![56e203a3-8121-4ba0-a1fa-30899c14aa11](https://github.com/user-attachments/assets/ba07df23-f8b0-42cd-84c5-a81f1c4cc815)
 
 Keterangan :
 - Top-5 rekomendasi menunjukkan bahwa model dapat memberikan rekomendasi yang relevan dan bermanfaat untuk pelanggan tertentu. Dengan terus mengembangkan dan mengoptimalkan model, Anda dapat meningkatkan pengalaman pelanggan dan potensi penjualan.
@@ -289,6 +331,8 @@ Keterangan :
 -  Nilai similarity yang lebih tinggi menunjukkan bahwa produk tersebut lebih relevan dengan preferensi pelanggan, yang dapat meningkatkan kemungkinan pelanggan untuk membeli produk tersebut.
 
 2. Collaborative Filtering:
+   Dalam pendekatan ini, cosine similarity digunakan untuk mengukur kesamaan antara pengguna atau item berdasarkan interaksi yang telah dilakukan. Misalnya, jika dua pengguna memiliki pola pembelian yang mirip, mereka akan memiliki nilai cosine similarity yang tinggi, yang memungkinkan sistem untuk merekomendasikan item yang disukai oleh pengguna lain dengan pola yang sama.
+   
    Pendekatan ini menggunakan data interaksi pengguna dengan produk untuk memberikan rekomendasi. Dalam hal ini, kami menggunakan cosine similarity untuk mengukur kesamaan antara produk berdasarkan pembelian yang dilakukan oleh pelanggan.
    
    Kelebihan:
@@ -299,9 +343,13 @@ Keterangan :
    - Memerlukan data yang cukup banyak untuk menghasilkan rekomendasi yang akurat.
    - Rentan terhadap cold start problem, di mana produk baru atau pengguna baru tidak memiliki cukup data untuk memberikan rekomendasi yang baik.
 
-Berikut adalah hasil  dari penerapan Collaboratif Filtering
+Berikut adalah hasil  dari penerapan Content-Base Filtering
 
 <img width="539" alt="Screenshot 2024-11-24 at 13 40 51" src="https://github.com/user-attachments/assets/11af7475-4011-4f18-8aff-2e82e2a34f82">
+
+![d195144e-d2d4-4ed3-b495-c54d15d85b84](https://github.com/user-attachments/assets/d0f596d6-f5ab-4bfb-a5bf-a3b4f08e5878)
+
+![ded2d8f5-a7ae-4014-beee-40bdf57271d3](https://github.com/user-attachments/assets/6d1abf65-9bc8-496e-bb10-83cabe7134b8)
 
 Keterangan :
 - Top-5 rekomendasi menunjukkan bahwa model dapat memberikan rekomendasi yang relevan dan bermanfaat untuk pelanggan tertentu. Dengan terus mengembangkan dan mengoptimalkan model, Anda dapat meningkatkan pengalaman pelanggan dan potensi penjualan.
