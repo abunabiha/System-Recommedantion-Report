@@ -63,28 +63,7 @@ Dengan pendekatan ini, proyek bertujuan untuk meningkatkan kualitas rekomendasi 
 ## Data Preparation
 Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting untuk memastikan bahwa data siap digunakan dalam analisis dan model rekomendasi. Proses yang dilakukan adalah sebagai berikut :
 
-**1. Load Data**
-- **Deskripsi**: 
-  Data dimuat dari file CSV dengan mencoba beberapa encoding (latin-1, iso-8859-1, cp1252). Ini penting karena file CSV dapat disimpan dengan berbagai encoding, dan memilih yang tepat memastikan data dibaca dengan benar.
-  
-- **Implementasi**:
-  ```python
-  def load_data(file_path):
-      encodings = ['latin-1', 'iso-8859-1', 'cp1252']
-      for encoding in encodings:
-          try:
-              df = pd.read_csv(file_path, encoding=encoding)
-              print(f"Data berhasil dimuat dengan encoding: {encoding}")
-              return df
-          except:
-              continue
-      raise Exception("Gagal membaca file. Silakan periksa format file CSV Anda")
-  ```
-  
-- **Output**: 
-  Setelah data dimuat, informasi dasar tentang dataset ditampilkan menggunakan `df.info()`, yang mencakup jumlah entri, jumlah kolom, dan tipe data dari setiap kolom. Ini memberikan gambaran awal tentang struktur data.
-
-**2. Data Cleaning**
+**1. Data Cleaning**
 - **Deskripsi**: 
   Proses ini bertujuan untuk menghapus data yang tidak valid dan memastikan bahwa data dalam format yang konsisten. Data yang bersih sangat penting untuk analisis yang akurat dan model yang efektif.
   
@@ -106,7 +85,7 @@ Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting u
 - **Output Pembersihan**: 
   Setelah pembersihan, jumlah data yang tersisa dan jumlah missing values ditampilkan. Ini memberikan gambaran tentang seberapa banyak data yang hilang dan seberapa bersih data setelah proses pembersihan.
 
-**3. Feature Engineering**
+**2. Feature Engineering**
 - **Deskripsi**: 
   Menambahkan fitur baru yang dapat membantu dalam analisis dan model rekomendasi. Fitur yang relevan dapat meningkatkan kemampuan model dalam memberikan rekomendasi yang akurat.
   
@@ -125,7 +104,7 @@ Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting u
 - **Output**: 
   Setelah fitur ditambahkan, contoh dari fitur baru ditampilkan untuk memastikan bahwa fitur tersebut ditambahkan dengan benar.
 
-**4. Handling Outliers**
+**3. Handling Outliers**
 - **Deskripsi**: 
   Mengidentifikasi dan menangani outliers yang dapat mempengaruhi analisis. Outliers dapat menyebabkan distorsi dalam hasil analisis dan model.
   
@@ -133,7 +112,31 @@ Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting u
   - Menggunakan metode statistik seperti IQR (Interquartile Range) atau Z-score untuk mendeteksi outliers.
   - Menghapus transaksi dengan Quantity atau UnitPrice yang sangat tinggi atau rendah dibandingkan dengan rata-rata untuk meningkatkan kualitas data.
 
-**5. Normalisasi**
+**4. Split Data**
+- **Deskripsi**: 
+  Data dibagi menjadi set pelatihan dan pengujian untuk mengevaluasi model rekomendasi. Pembagian ini penting untuk menghindari overfitting dan untuk menguji kemampuan model pada data yang belum pernah dilihat sebelumnya.
+  
+- **Implementasi**:
+  ```python
+  from sklearn.model_selection import train_test_split
+
+  train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
+
+  ```
+- **Output**: 
+  80% data digunakan untuk pelatihan dan 20% untuk pengujian, memastikan bahwa model dapat dievaluasi dengan baik.
+
+
+**5. Pembuatan Pivot Tabel untuk Sistem Rekomendasi**
+- **Deskripsi**: 
+  Pivot tabel dibuat untuk memudahkan analisis dan rekomendasi. Pivot tabel ini memungkinkan kita untuk melihat interaksi antara pelanggan dan produk, yang sangat penting untuk model rekomendasi.
+  
+- **Implementasi**:
+  ```python
+  pivot_table = df.pivot_table(index='CustomerID', columns='StockCode', values='Quantity', fill_value=0)
+  ```
+
+**6. Normalisasi**
 - **Deskripsi**: 
   Normalisasi dilakukan untuk memastikan bahwa fitur numerik berada dalam skala yang sama, yang penting untuk algoritma yang sensitif terhadap skala, seperti cosine similarity.
   
@@ -147,36 +150,6 @@ Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting u
   
 - **Output**: 
   Fitur seperti `Quantity`, `UnitPrice`, dan `TotalAmount` dinormalisasi ke rentang [0, 1], sehingga semua fitur berada dalam skala yang sama.
-
-**6. Pembuatan Pivot Tabel untuk Sistem Rekomendasi**
-- **Deskripsi**: 
-  Pivot tabel dibuat untuk memudahkan analisis dan rekomendasi. Pivot tabel ini memungkinkan kita untuk melihat interaksi antara pelanggan dan produk, yang sangat penting untuk model rekomendasi.
-  
-- **Implementasi**:
-  ```python
-  pivot_table = df.pivot_table(index='CustomerID', columns='StockCode', values='Quantity', fill_value=0)
-  ```
-
-**7. Split Data**
-- **Deskripsi**: 
-  Data dibagi menjadi set pelatihan dan pengujian untuk mengevaluasi model rekomendasi. Pembagian ini penting untuk menghindari overfitting dan untuk menguji kemampuan model pada data yang belum pernah dilihat sebelumnya.
-  
-- **Implementasi**:
-  ```python
-  from sklearn.model_selection import train_test_split
-
-  train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
-  ```
-  
-- **Output**: 
-  80% data digunakan untuk pelatihan dan 20% untuk pengujian, memastikan bahwa model dapat dievaluasi dengan baik.
-
-**8. Status Missing Values**
-- **Deskripsi**: 
-  Setelah semua langkah di atas, status missing values diperiksa kembali untuk memastikan bahwa tidak ada data yang hilang.
-  
-- **Output**: 
-  Semua kolom harus terisi lengkap tanpa missing values, memastikan bahwa data siap untuk analisis lebih lanjut.
 
 ---
 Alasan Pentingnya Data Preparation
