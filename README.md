@@ -63,7 +63,8 @@ Dengan pendekatan ini, proyek bertujuan untuk meningkatkan kualitas rekomendasi 
 **Exploratory data analysis**
 1. Informasi Total Pembelian per Bulan
 
-![alt text](TotalPembelianPerbulan.png)
+![TotalPembelianPerbulan](https://github.com/user-attachments/assets/54c2c95f-b25c-4fa0-8325-e65973a5446a)
+
 
 Berdasarkan grafik yang menunjukkan total pembelian per bulan, berikut adalah beberapa analisis yang dapat dilakukan:
 1. Tren Pembelian:
