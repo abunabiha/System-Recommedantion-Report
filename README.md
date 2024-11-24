@@ -60,6 +60,134 @@ Dengan pendekatan ini, proyek bertujuan untuk meningkatkan kualitas rekomendasi 
    - Country: Negara tempat pelanggan berada (tipe: object).
 
 
+## Data Preparation
+Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting untuk memastikan bahwa data siap digunakan dalam analisis dan model rekomendasi. Proses yang dilakukan adalah sebagai berikut :
+
+**1. Load Data**
+- **Deskripsi**: 
+  Data dimuat dari file CSV dengan mencoba beberapa encoding (latin-1, iso-8859-1, cp1252). Ini penting karena file CSV dapat disimpan dengan berbagai encoding, dan memilih yang tepat memastikan data dibaca dengan benar.
+  
+- **Implementasi**:
+  ```python
+  def load_data(file_path):
+      encodings = ['latin-1', 'iso-8859-1', 'cp1252']
+      for encoding in encodings:
+          try:
+              df = pd.read_csv(file_path, encoding=encoding)
+              print(f"Data berhasil dimuat dengan encoding: {encoding}")
+              return df
+          except:
+              continue
+      raise Exception("Gagal membaca file. Silakan periksa format file CSV Anda")
+  ```
+  
+- **Output**: 
+  Setelah data dimuat, informasi dasar tentang dataset ditampilkan menggunakan `df.info()`, yang mencakup jumlah entri, jumlah kolom, dan tipe data dari setiap kolom. Ini memberikan gambaran awal tentang struktur data.
+
+**2. Data Cleaning**
+- **Deskripsi**: 
+  Proses ini bertujuan untuk menghapus data yang tidak valid dan memastikan bahwa data dalam format yang konsisten. Data yang bersih sangat penting untuk analisis yang akurat dan model yang efektif.
+  
+- **Langkah-langkah**:
+  - **Menghapus Spasi Berlebih**: 
+    Untuk kolom string, spasi berlebih dihapus menggunakan `str.strip()`. Ini penting untuk memastikan bahwa tidak ada kesalahan dalam analisis yang disebabkan oleh spasi yang tidak terlihat.
+    
+  - **Memfilter Data**: 
+    Data difilter untuk menghapus entri yang tidak valid:
+    - **Quantity Negatif**: Menghapus transaksi dengan Quantity kurang dari atau sama dengan nol, yang tidak relevan untuk analisis penjualan.
+    - **UnitPrice Negatif**: Menghapus transaksi dengan UnitPrice kurang dari atau sama dengan nol, yang menunjukkan kesalahan dalam data atau item gratis.
+    
+  - **CustomerID Kosong**: 
+    Menghapus entri di mana CustomerID tidak ada, karena ini tidak memberikan informasi yang berguna untuk analisis pelanggan.
+    
+  - **Konversi Format Tanggal**: 
+    Kolom InvoiceDate diubah menjadi format datetime menggunakan `pd.to_datetime()`, yang memungkinkan analisis temporal yang lebih baik.
+    
+- **Output Pembersihan**: 
+  Setelah pembersihan, jumlah data yang tersisa dan jumlah missing values ditampilkan. Ini memberikan gambaran tentang seberapa banyak data yang hilang dan seberapa bersih data setelah proses pembersihan.
+
+**3. Feature Engineering**
+- **Deskripsi**: 
+  Menambahkan fitur baru yang dapat membantu dalam analisis dan model rekomendasi. Fitur yang relevan dapat meningkatkan kemampuan model dalam memberikan rekomendasi yang akurat.
+  
+- **Langkah-langkah**:
+  - **Menambahkan Fitur Waktu**:
+    - **Year**: Menyimpan tahun dari InvoiceDate untuk analisis temporal.
+    - **Month**: Menyimpan bulan dari InvoiceDate untuk melihat tren bulanan.
+    - **DayOfWeek**: Menyimpan hari dalam seminggu dari InvoiceDate, di mana 0=Senin, 1=Selasa, dan seterusnya. Ini memungkinkan analisis berdasarkan waktu, seperti tren penjualan harian.
+    
+  - **TotalAmount**: 
+    Dihitung dengan mengalikan Quantity dan UnitPrice. Ini memberikan informasi tentang nilai total dari setiap transaksi, yang penting untuk analisis pendapatan.
+    
+  - **PriceCategory**: 
+    Menggunakan `pd.qcut()` untuk membagi UnitPrice menjadi empat kategori (Low, Medium, High, Premium) berdasarkan kuantil. Ini membantu dalam segmentasi produk dan analisis perilaku pembelian.
+    
+- **Output**: 
+  Setelah fitur ditambahkan, contoh dari fitur baru ditampilkan untuk memastikan bahwa fitur tersebut ditambahkan dengan benar.
+
+**4. Handling Outliers**
+- **Deskripsi**: 
+  Mengidentifikasi dan menangani outliers yang dapat mempengaruhi analisis. Outliers dapat menyebabkan distorsi dalam hasil analisis dan model.
+  
+- **Metode**:
+  - Menggunakan metode statistik seperti IQR (Interquartile Range) atau Z-score untuk mendeteksi outliers.
+  - Menghapus transaksi dengan Quantity atau UnitPrice yang sangat tinggi atau rendah dibandingkan dengan rata-rata untuk meningkatkan kualitas data.
+
+**5. Normalisasi**
+- **Deskripsi**: 
+  Normalisasi dilakukan untuk memastikan bahwa fitur numerik berada dalam skala yang sama, yang penting untuk algoritma yang sensitif terhadap skala, seperti cosine similarity.
+  
+- **Implementasi**:
+  ```python
+  from sklearn.preprocessing import MinMaxScaler
+
+  scaler = MinMaxScaler()
+  df[['Quantity', 'UnitPrice', 'TotalAmount']] = scaler.fit_transform(df[['Quantity', 'UnitPrice', 'TotalAmount']])
+  ```
+  
+- **Output**: 
+  Fitur seperti `Quantity`, `UnitPrice`, dan `TotalAmount` dinormalisasi ke rentang [0, 1], sehingga semua fitur berada dalam skala yang sama.
+
+**6. Pembuatan Pivot Tabel untuk Sistem Rekomendasi**
+- **Deskripsi**: 
+  Pivot tabel dibuat untuk memudahkan analisis dan rekomendasi. Pivot tabel ini memungkinkan kita untuk melihat interaksi antara pelanggan dan produk, yang sangat penting untuk model rekomendasi.
+  
+- **Implementasi**:
+  ```python
+  pivot_table = df.pivot_table(index='CustomerID', columns='StockCode', values='Quantity', fill_value=0)
+  ```
+
+**7. Split Data**
+- **Deskripsi**: 
+  Data dibagi menjadi set pelatihan dan pengujian untuk mengevaluasi model rekomendasi. Pembagian ini penting untuk menghindari overfitting dan untuk menguji kemampuan model pada data yang belum pernah dilihat sebelumnya.
+  
+- **Implementasi**:
+  ```python
+  from sklearn.model_selection import train_test_split
+
+  train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
+  ```
+  
+- **Output**: 
+  80% data digunakan untuk pelatihan dan 20% untuk pengujian, memastikan bahwa model dapat dievaluasi dengan baik.
+
+**8. Status Missing Values**
+- **Deskripsi**: 
+  Setelah semua langkah di atas, status missing values diperiksa kembali untuk memastikan bahwa tidak ada data yang hilang.
+  
+- **Output**: 
+  Semua kolom harus terisi lengkap tanpa missing values, memastikan bahwa data siap untuk analisis lebih lanjut.
+
+---
+Alasan Pentingnya Data Preparation
+Tahapan data preparation sangat penting karena:
+1. Kualitas Data: Data yang bersih dan terstruktur dengan baik meningkatkan kualitas analisis dan hasil model.
+2. Akurasi Model: Mengurangi noise dan bias dalam data membantu dalam membangun model yang lebih akurat dan dapat diandalkan.
+3. Efisiensi Proses: Memastikan bahwa data siap digunakan menghemat waktu dan sumber daya dalam tahap analisis dan pengembangan model.
+
+Dengan mengikuti tahapan data preparation ini, kami dapat memastikan bahwa data yang digunakan dalam analisis dan model rekomendasi adalah data yang berkualitas dan siap digunakan.
+
+
 **Exploratory data analysis**
 1. Informasi Total Pembelian per Bulan
 
@@ -225,134 +353,6 @@ Berdasarkan ringkasa diatas dapat disimpulkan bahwa:
 1. Top 5 produk terlaris mencakup PACK OF 72 RETROSPOT CAKE CASES yang   menduduki posisi teratas dengan total penjualan sebanyak 15,009 unit, diikuti oleh ASSORTED COLOUR BIRD ORNAMENT dengan 13,673 unit, dan JUMBO BAG RED RETROSPOT yang terjual sebanyak 12,170 unit. Produk lainnya yang juga populer adalah WHITE HANGING HEART T-LIGHT HOLDER dengan 10,803 unit dan LUNCH BAG RED RETROSPOT yang terjual sebanyak 9,797 unit.
 2. Dari segi distribusi pembelian berdasarkan kategori harga, kategori Low mendominasi dengan total pembelian sebanyak 126,039 unit, diikuti oleh kategori High dengan 96,504 unit. Kategori Medium dan Premium masing-masing mencatatkan 64,667 dan 50,941 unit, menunjukkan bahwa produk dengan harga rendah lebih banyak diminati oleh pelanggan.
 3. Selain itu, rata-rata pembelian per negara menunjukkan bahwa Czech Republic memiliki rata-rata pembelian tertinggi dengan 20.11 unit, diikuti oleh Denmark dengan 15.06 unit dan Lithuania dengan 14.83 unit. Singapore dan Brazil juga menunjukkan rata-rata pembelian yang signifikan, masing-masing dengan 13.37 dan 13.12 unit. Data ini memberikan wawasan berharga untuk merumuskan strategi pemasaran dan pengelolaan inventaris yang lebih efektif.
-
-
-## Data Preparation
-Pada bagian ini, kami menerapkan beberapa teknik data preparation yang penting untuk memastikan bahwa data siap digunakan dalam analisis dan model rekomendasi. Proses yang dilakukan adalah sebagai berikut :
-
-**1. Load Data**
-- **Deskripsi**: 
-  Data dimuat dari file CSV dengan mencoba beberapa encoding (latin-1, iso-8859-1, cp1252). Ini penting karena file CSV dapat disimpan dengan berbagai encoding, dan memilih yang tepat memastikan data dibaca dengan benar.
-  
-- **Implementasi**:
-  ```python
-  def load_data(file_path):
-      encodings = ['latin-1', 'iso-8859-1', 'cp1252']
-      for encoding in encodings:
-          try:
-              df = pd.read_csv(file_path, encoding=encoding)
-              print(f"Data berhasil dimuat dengan encoding: {encoding}")
-              return df
-          except:
-              continue
-      raise Exception("Gagal membaca file. Silakan periksa format file CSV Anda")
-  ```
-  
-- **Output**: 
-  Setelah data dimuat, informasi dasar tentang dataset ditampilkan menggunakan `df.info()`, yang mencakup jumlah entri, jumlah kolom, dan tipe data dari setiap kolom. Ini memberikan gambaran awal tentang struktur data.
-
-**2. Data Cleaning**
-- **Deskripsi**: 
-  Proses ini bertujuan untuk menghapus data yang tidak valid dan memastikan bahwa data dalam format yang konsisten. Data yang bersih sangat penting untuk analisis yang akurat dan model yang efektif.
-  
-- **Langkah-langkah**:
-  - **Menghapus Spasi Berlebih**: 
-    Untuk kolom string, spasi berlebih dihapus menggunakan `str.strip()`. Ini penting untuk memastikan bahwa tidak ada kesalahan dalam analisis yang disebabkan oleh spasi yang tidak terlihat.
-    
-  - **Memfilter Data**: 
-    Data difilter untuk menghapus entri yang tidak valid:
-    - **Quantity Negatif**: Menghapus transaksi dengan Quantity kurang dari atau sama dengan nol, yang tidak relevan untuk analisis penjualan.
-    - **UnitPrice Negatif**: Menghapus transaksi dengan UnitPrice kurang dari atau sama dengan nol, yang menunjukkan kesalahan dalam data atau item gratis.
-    
-  - **CustomerID Kosong**: 
-    Menghapus entri di mana CustomerID tidak ada, karena ini tidak memberikan informasi yang berguna untuk analisis pelanggan.
-    
-  - **Konversi Format Tanggal**: 
-    Kolom InvoiceDate diubah menjadi format datetime menggunakan `pd.to_datetime()`, yang memungkinkan analisis temporal yang lebih baik.
-    
-- **Output Pembersihan**: 
-  Setelah pembersihan, jumlah data yang tersisa dan jumlah missing values ditampilkan. Ini memberikan gambaran tentang seberapa banyak data yang hilang dan seberapa bersih data setelah proses pembersihan.
-
-**3. Feature Engineering**
-- **Deskripsi**: 
-  Menambahkan fitur baru yang dapat membantu dalam analisis dan model rekomendasi. Fitur yang relevan dapat meningkatkan kemampuan model dalam memberikan rekomendasi yang akurat.
-  
-- **Langkah-langkah**:
-  - **Menambahkan Fitur Waktu**:
-    - **Year**: Menyimpan tahun dari InvoiceDate untuk analisis temporal.
-    - **Month**: Menyimpan bulan dari InvoiceDate untuk melihat tren bulanan.
-    - **DayOfWeek**: Menyimpan hari dalam seminggu dari InvoiceDate, di mana 0=Senin, 1=Selasa, dan seterusnya. Ini memungkinkan analisis berdasarkan waktu, seperti tren penjualan harian.
-    
-  - **TotalAmount**: 
-    Dihitung dengan mengalikan Quantity dan UnitPrice. Ini memberikan informasi tentang nilai total dari setiap transaksi, yang penting untuk analisis pendapatan.
-    
-  - **PriceCategory**: 
-    Menggunakan `pd.qcut()` untuk membagi UnitPrice menjadi empat kategori (Low, Medium, High, Premium) berdasarkan kuantil. Ini membantu dalam segmentasi produk dan analisis perilaku pembelian.
-    
-- **Output**: 
-  Setelah fitur ditambahkan, contoh dari fitur baru ditampilkan untuk memastikan bahwa fitur tersebut ditambahkan dengan benar.
-
-**4. Handling Outliers**
-- **Deskripsi**: 
-  Mengidentifikasi dan menangani outliers yang dapat mempengaruhi analisis. Outliers dapat menyebabkan distorsi dalam hasil analisis dan model.
-  
-- **Metode**:
-  - Menggunakan metode statistik seperti IQR (Interquartile Range) atau Z-score untuk mendeteksi outliers.
-  - Menghapus transaksi dengan Quantity atau UnitPrice yang sangat tinggi atau rendah dibandingkan dengan rata-rata untuk meningkatkan kualitas data.
-
-**5. Normalisasi**
-- **Deskripsi**: 
-  Normalisasi dilakukan untuk memastikan bahwa fitur numerik berada dalam skala yang sama, yang penting untuk algoritma yang sensitif terhadap skala, seperti cosine similarity.
-  
-- **Implementasi**:
-  ```python
-  from sklearn.preprocessing import MinMaxScaler
-
-  scaler = MinMaxScaler()
-  df[['Quantity', 'UnitPrice', 'TotalAmount']] = scaler.fit_transform(df[['Quantity', 'UnitPrice', 'TotalAmount']])
-  ```
-  
-- **Output**: 
-  Fitur seperti `Quantity`, `UnitPrice`, dan `TotalAmount` dinormalisasi ke rentang [0, 1], sehingga semua fitur berada dalam skala yang sama.
-
-**6. Pembuatan Pivot Tabel untuk Sistem Rekomendasi**
-- **Deskripsi**: 
-  Pivot tabel dibuat untuk memudahkan analisis dan rekomendasi. Pivot tabel ini memungkinkan kita untuk melihat interaksi antara pelanggan dan produk, yang sangat penting untuk model rekomendasi.
-  
-- **Implementasi**:
-  ```python
-  pivot_table = df.pivot_table(index='CustomerID', columns='StockCode', values='Quantity', fill_value=0)
-  ```
-
-**7. Split Data**
-- **Deskripsi**: 
-  Data dibagi menjadi set pelatihan dan pengujian untuk mengevaluasi model rekomendasi. Pembagian ini penting untuk menghindari overfitting dan untuk menguji kemampuan model pada data yang belum pernah dilihat sebelumnya.
-  
-- **Implementasi**:
-  ```python
-  from sklearn.model_selection import train_test_split
-
-  train_data, test_data = train_test_split(df, test_size=0.2, random_state=42)
-  ```
-  
-- **Output**: 
-  80% data digunakan untuk pelatihan dan 20% untuk pengujian, memastikan bahwa model dapat dievaluasi dengan baik.
-
-**8. Status Missing Values**
-- **Deskripsi**: 
-  Setelah semua langkah di atas, status missing values diperiksa kembali untuk memastikan bahwa tidak ada data yang hilang.
-  
-- **Output**: 
-  Semua kolom harus terisi lengkap tanpa missing values, memastikan bahwa data siap untuk analisis lebih lanjut.
-
----
-Alasan Pentingnya Data Preparation
-Tahapan data preparation sangat penting karena:
-1. Kualitas Data: Data yang bersih dan terstruktur dengan baik meningkatkan kualitas analisis dan hasil model.
-2. Akurasi Model: Mengurangi noise dan bias dalam data membantu dalam membangun model yang lebih akurat dan dapat diandalkan.
-3. Efisiensi Proses: Memastikan bahwa data siap digunakan menghemat waktu dan sumber daya dalam tahap analisis dan pengembangan model.
-
-Dengan mengikuti tahapan data preparation ini, kami dapat memastikan bahwa data yang digunakan dalam analisis dan model rekomendasi adalah data yang berkualitas dan siap digunakan.
 
 ## Modeling
 Cosine Similarity
